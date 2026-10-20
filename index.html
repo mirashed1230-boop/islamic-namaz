@@ -9,21 +9,22 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background: #081c15; color: #fff; min-height: 100vh; position: relative; }
         .bg-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url('53321.png') center/cover no-repeat; opacity: 0.15; z-index: -1; }
-        header { background: rgba(10, 47, 34, 0.9); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #d4af37; backdrop-filter: blur(5px); position: sticky; top: 0; z-index: 100; }
+        header { background: rgba(10, 47, 34, 0.95); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #d4af37; backdrop-filter: blur(5px); position: sticky; top: 0; z-index: 100; }
         .logo { font-size: 18px; font-weight: bold; color: #d4af37; display: flex; align-items: center; gap: 8px; }
         .brand-sub { font-size: 12px; color: #e0e0e0; font-weight: normal; background: rgba(212,175,55,0.2); padding: 2px 8px; border-radius: 10px; border: 1px solid #d4af37; }
-        nav button { background: transparent; border: 1px solid #d4af37; color: #d4af37; padding: 6px 10px; border-radius: 5px; cursor: pointer; margin-left: 3px; font-size: 13px; }
+        nav button { background: transparent; border: 1px solid #d4af37; color: #d4af37; padding: 6px 12px; border-radius: 5px; cursor: pointer; margin-left: 3px; font-size: 13px; }
         nav button.active, nav button:hover { background: #d4af37; color: #081c15; }
         .container { max-width: 800px; margin: 20px auto; padding: 0 15px; }
         .section { display: none; background: rgba(15, 52, 39, 0.85); padding: 20px; border-radius: 12px; border: 1px solid rgba(212,175,55,0.3); backdrop-filter: blur(10px); margin-bottom: 20px; }
         .section.active { display: block; }
         h2 { color: #d4af37; margin-bottom: 15px; border-bottom: 1px solid rgba(212,175,55,0.3); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 20px; }
         .card { background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.2); padding: 15px; border-radius: 8px; margin-bottom: 12px; }
-        .tasbih-box { text-align: center; padding: 30px 10px; }
-        .tasbih-count { font-size: 60px; font-weight: bold; color: #d4af37; margin: 15px 0; }
-        .tasbih-btn { width: 130px; height: 130px; border-radius: 50%; background: #d4af37; color: #081c15; font-size: 20px; font-weight: bold; border: none; cursor: pointer; box-shadow: 0 0 20px rgba(212,175,55,0.4); active { transform: scale(0.95); } }
+        .card h3 { color: #d4af37; font-size: 16px; margin-bottom: 6px; }
+        .tasbih-box { text-align: center; padding: 20px 10px; }
+        .tasbih-count { font-size: 50px; font-weight: bold; color: #d4af37; margin: 10px 0; }
+        .tasbih-btn { width: 110px; height: 110px; border-radius: 50%; background: #d4af37; color: #081c15; font-size: 18px; font-weight: bold; border: none; cursor: pointer; box-shadow: 0 0 15px rgba(212,175,55,0.4); }
         .voice-btn { background: none; border: none; color: #d4af37; cursor: pointer; font-size: 18px; margin-left: 8px; }
-        .btn-custom { background: rgba(212,175,55,0.2); border: 1px solid #d4af37; color: #fff; padding: 8px 15px; border-radius: 5px; cursor: pointer; }
+        .btn-custom { background: rgba(212,175,55,0.2); border: 1px solid #d4af37; color: #fff; padding: 6px 12px; border-radius: 5px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -38,10 +39,27 @@
     </header>
 
     <div class="container">
-        <!-- Home Section -->
+        <!-- Home Section (সবকিছু একসাথেই থাকবে) -->
         <div id="home" class="section active">
             <h2>স্বাগতম <button class="voice-btn" onclick="speakText('আসসালামু আলাইকুম, ইসলামিক আলো ওয়েবসাইটে আপনাকে স্বাগতম।')"><i class="fas fa-volume-up"></i></button></h2>
-            <p>আমাদের ওয়েবসাইটে স্বাগতম! এখানে আপনি সহিহ নিয়মে নামাজ শিক্ষা, ডিজিটাল তাসবীহ এবং প্রয়োজনীয় ইসলামিক জ্ঞান লাভ করতে পারবেন।</p>
+            <p style="margin-bottom: 20px; color: #e0e0e0;">আসসালামু আলাইকুম! নিচে পাঁচ ওয়াক্ত নামাজ এবং ডিজিটাল তাসবীহ সহ প্রয়োজনীয় ইসলামিক শিক্ষা তুলে ধরা হলো।</p>
+            
+            <h3 style="color: #d4af37; margin-bottom: 10px;">🕌 পাঁচ ওয়াক্ত সালাতের বিবরণ</h3>
+            <div class="card"><strong>ফজর:</strong> ২ রাকাত সুন্নাত, ২ রাকাত ফরজ।</div>
+            <div class="card"><strong>জোহর:</strong> ৪ রাকাত সুন্নাত, ৪ রাকাত ফরজ, ২ রাকাত সুন্নাত, ২ রাকাত নফল।</div>
+            <div class="card"><strong>আসর:</strong> ৪ রাকাত সুন্নাত, ৪ রাকাত ফরজ।</div>
+            <div class="card"><strong>মাগরিব:</strong> ৩ রাকাত ফরজ, ২ রাকাত সুন্নাত, ২ রাকাত নফল।</div>
+            <div class="card"><strong>এশা:</strong> ৪ রাকাত সুন্নাত, ৪ রাকাত ফরজ, ২ রাকাত সুন্নাত, ২ রাকাত নফল, ৩ রাকাত বিতর।</div>
+
+            <h3 style="color: #d4af37; margin-top: 20px; margin-bottom: 10px;">📿 ডিজিটাল তাসবীহ</h3>
+            <div class="card tasbih-box">
+                <h4 id="zikr-title-home" style="color: #d4af37; font-size: 20px;">সুবহানাল্লাহ</h4>
+                <div class="tasbih-count" id="count-home">0</div>
+                <button class="tasbih-btn" onclick="countUpHome()">ট্যাপ করুন</button>
+                <div style="margin-top: 15px;">
+                    <button class="btn-custom" onclick="resetTasbihHome()">রিসেট</button>
+                </div>
+            </div>
         </div>
 
         <!-- Namaz Section -->
@@ -71,6 +89,7 @@
     <script>
         let currentCount = 0;
         let totalCount = 0;
+        let homeCount = 0;
         const zikrs = ["সুবহানাল্লাহ", "আলহামদুলিল্লাহ", "আল্লাহু আকবার", "লা ইলাহা ইল্লাল্লাহ"];
         let zikrIndex = 0;
 
@@ -79,6 +98,16 @@
             document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
             if(event) event.target.classList.add('active');
+        }
+
+        function countUpHome() {
+            homeCount++;
+            document.getElementById('count-home').innerText = homeCount;
+        }
+
+        function resetTasbihHome() {
+            homeCount = 0;
+            document.getElementById('count-home').innerText = 0;
         }
 
         function countUp() {
