@@ -14,7 +14,7 @@
         .hero-title { font-size: 28px; color: #d4af37; font-weight: bold; margin-bottom: 15px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
         
         /* Navigation */
-        nav { background: #123021; padding: 10px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; border-bottom: 1px solid rgba(212,175,55,0.3); }
+        nav { background: #123021; padding: 10px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; border-bottom: 1px solid rgba(212,175,55,0.3); sticky: top; z-index: 100; }
         nav button { background: rgba(212,175,55,0.1); border: 1px solid #d4af37; color: #d4af37; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 14px; transition: 0.3s; }
         nav button.active, nav button:hover { background: #d4af37; color: #0b1d13; font-weight: bold; }
 
@@ -25,11 +25,6 @@
         .section-title { font-size: 24px; color: #d4af37; text-align: center; margin-bottom: 20px; border-bottom: 2px dashed rgba(212,175,55,0.3); padding-bottom: 10px; }
         .sub-title { font-size: 20px; color: #fff; margin: 15px 0; border-left: 4px solid #d4af37; padding-left: 10px; }
 
-        /* Audio Player Styling */
-        .quran-player { background: #081c15; border: 1px solid #d4af37; padding: 20px; border-radius: 10px; text-align: center; margin-top: 15px; }
-        .surah-select { width: 100%; max-width: 300px; padding: 10px; background: #123021; color: #d4af37; border: 1px solid #d4af37; border-radius: 5px; font-size: 16px; margin-bottom: 15px; outline: none; }
-        audio { width: 100%; max-width: 400px; margin-top: 10px; }
-
         /* Namaz Steps Graphic Layout */
         .step-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0; }
         .step-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.2); border-radius: 10px; padding: 15px; text-align: center; }
@@ -37,10 +32,13 @@
         .step-card h4 { color: #d4af37; margin-bottom: 5px; font-size: 18px; }
         .step-card p { font-size: 13px; color: #ddd; }
 
-        /* Quran & Dua Box */
-        .arabic-box { background: rgba(0, 0, 0, 0.2); border: 1px solid #d4af37; border-radius: 8px; padding: 15px; margin: 15px 0; text-align: right; }
-        .arabic-text { font-size: 22px; color: #d4af37; font-family: 'Traditional Arabic', serif; line-height: 1.8; margin-bottom: 10px; }
-        .bn-meaning { text-align: left; font-size: 14px; color: #e0e0e0; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 8px; }
+        /* Quran Player Cards */
+        .surah-card { background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(212,175,55,0.3); border-radius: 10px; padding: 18px; margin-bottom: 15px; }
+        .surah-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(212,175,55,0.2); padding-bottom: 10px; margin-bottom: 12px; }
+        .surah-title { color: #d4af37; font-size: 18px; font-weight: bold; }
+        .arabic-text { font-size: 22px; color: #d4af37; font-family: 'Traditional Arabic', serif; line-height: 1.8; text-align: right; margin-bottom: 10px; }
+        .bn-meaning { font-size: 14px; color: #e0e0e0; margin-bottom: 12px; line-height: 1.5; }
+        audio { width: 100%; border-radius: 20px; outline: none; height: 36px; margin-top: 5px; }
 
         /* Feature Cards Grid */
         .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-top: 20px; }
@@ -68,36 +66,11 @@
     <nav>
         <button class="active"><i class="fas fa-home"></i> হোম</button>
         <button><i class="fas fa-book-open"></i> নামাজ শিক্ষা</button>
-        <button><i class="fas fa-quran"></i> আল-কুরআন</button>
+        <button><i class="fas fa-quran"></i> আল-কুরআন ও অডিও</button>
         <button><i class="fas fa-info-circle"></i> আমাদের সম্পর্কে</button>
     </nav>
 
     <div class="container">
-        
-        <!-- NEW: Al-Quran Audio Player Section -->
-        <div class="main-card">
-            <h2 class="section-title">📖 আল-কুরআন অডিও তিলওয়াত</h2>
-            <p style="text-align: center; color: #ddd; margin-bottom: 15px;">নিচে পছন্দের সূরা নির্বাচন করে অডিও শুনুন:</p>
-            
-            <div class="quran-player">
-                <select class="surah-select" id="surahSelect" onchange="changeSurah()">
-                    <option value="001">১. সূরা আল-ফাতিহা</option>
-                    <option value="112">১১২. সূরা আল-ইখলাস</option>
-                    <option value="113">১১৩. সূরা আল-ফালাক</option>
-                    <option value="114">১১৪. সূরা আন-নাস</option>
-                    <option value="036">৩৬. সূরা ইয়াসীন</option>
-                    <option value="067">৬৭. সূরা আল-মুলক</option>
-                    <option value="055">৫৫. সূরা আর-রহমান</option>
-                </select>
-                <div>
-                    <audio id="audioPlayer" controls>
-                        <source id="audioSource" src="https://server8.mp3quran.net/afs/001.mp3" type="audio/mp3">
-                        আপনার ব্রাউজারে অডিও প্লেয়ার সাপোর্ট করে না।
-                    </audio>
-                </div>
-            </div>
-        </div>
-
         <!-- Namaz Shikkha Section -->
         <div class="main-card">
             <h2 class="section-title">🕌 নামাজ শিক্ষা</h2>
@@ -120,19 +93,68 @@
                     <p>"সুবহানা রাব্বিয়াল আ'লা"</p>
                 </div>
             </div>
+        </div>
 
-            <h3 class="sub-title">সূরা ও দোয়া</h3>
-            
-            <div class="arabic-box">
-                <div class="arabic-text">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
-                <div class="arabic-text">قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ ۝</div>
-                <div class="bn-meaning"><strong>সূরা আল-ইখলাস:</strong> বলুন, তিনিই আল্লাহ, একক। আল্লাহ অমুখাপেক্ষী।</div>
+        <!-- Quran Audio Player Section (NEW FEATURE) -->
+        <div class="main-card">
+            <h2 class="section-title">📖 আল-কুরআন (তেলাওয়াত ও অনুবাদ)</h2>
+
+            <!-- Surah Al-Fatiha -->
+            <div class="surah-card">
+                <div class="surah-header">
+                    <span class="surah-title">১. সূরা আল-ফাতিহা (الفاتحة)</span>
+                    <span style="font-size: 12px; color: #d4af37;">মক্কী | আয়াত: ৭</span>
+                </div>
+                <div class="arabic-text">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ ۝ ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَالَمِينَ ۝ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ ۝ مَالِكِ يَوْمِ ٱلدِّينِ ۝</div>
+                <div class="bn-meaning"><strong>বাংলা অনুবাদ:</strong> পরম করুণাময় অসীম দয়ালু আল্লাহর নামে শুরু করছি। সকল প্রশংসা সৃষ্টিজগতের পালনকর্তা আল্লাহর জন্য। যিনি পরম করুণাময় ও দয়ালু। যিনি বিচার দিনের মালিক।</div>
+                <audio controls>
+                    <source src="https://server8.mp3quran.net/afs/001.mp3" type="audio/mpeg">
+                    আপনার ব্রাউজার অডিও প্লেয়ার সাপোর্ট করে না।
+                </audio>
             </div>
 
-            <div class="arabic-box">
-                <div class="arabic-text">اللَّهُمَّ بَارِكْ لَنَا فِيمَا رَزَقْتَنَا وَقِنَا عَذَابَ النَّارِ</div>
-                <div class="bn-meaning"><strong>দোয়া:</strong> হে আল্লাহ! আপনি আমাদেরকে যে রিযিক দিয়েছেন তাতে বরকত দিন এবং জাহান্নামের আজাব থেকে রক্ষা করুন।</div>
+            <!-- Surah Al-Ikhlas -->
+            <div class="surah-card">
+                <div class="surah-header">
+                    <span class="surah-title">১১২. সূরা আল-ইখলাস (الإخلاص)</span>
+                    <span style="font-size: 12px; color: #d4af37;">মক্কী | আয়াত: ৪</span>
+                </div>
+                <div class="arabic-text">قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ ۝ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ ۝</div>
+                <div class="bn-meaning"><strong>বাংলা অনুবাদ:</strong> বলুন, তিনিই আল্লাহ, একক। আল্লাহ অমুখাপেক্ষী। তিনি কাউকে জন্ম দেননি এবং তাঁকেও জন্ম দেওয়া হয়নি। এবং তাঁর সমতুল্য কেউই নেই।</div>
+                <audio controls>
+                    <source src="https://server8.mp3quran.net/afs/112.mp3" type="audio/mpeg">
+                    আপনার ব্রাউজার অডিও প্লেয়ার সাপোর্ট করে না।
+                </audio>
             </div>
+
+            <!-- Surah Al-Falaq -->
+            <div class="surah-card">
+                <div class="surah-header">
+                    <span class="surah-title">১১৩. সূরা আল-ফালাক (الفلق)</span>
+                    <span style="font-size: 12px; color: #d4af37;">মক্কী | আয়াত: ৫</span>
+                </div>
+                <div class="arabic-text">قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ۝ مِن شَرِّ مَا خَلَقَ ۝ وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ ۝</div>
+                <div class="bn-meaning"><strong>বাংলা অনুবাদ:</strong> বলুন, আমি আশ্রয় প্রার্থনা করছি ভোরের রবের, তিনি যা সৃষ্টি করেছেন তার অনিষ্ট হতে এবং আঁধার রাতের অনিষ্ট হতে যখন তা গভীর হয়।</div>
+                <audio controls>
+                    <source src="https://server8.mp3quran.net/afs/113.mp3" type="audio/mpeg">
+                    আপনার ব্রাউজার অডিও প্লেয়ার সাপোর্ট করে না।
+                </audio>
+            </div>
+
+            <!-- Surah An-Nas -->
+            <div class="surah-card">
+                <div class="surah-header">
+                    <span class="surah-title">১১৪. সূরা আন-নাস (الناس)</span>
+                    <span style="font-size: 12px; color: #d4af37;">মক্কী | আয়াত: ৬</span>
+                </div>
+                <div class="arabic-text">قُلْ أَعُوذُ بِرَبِّ النَّاسِ ۝ مَلِكِ النَّاسِ ۝ إِلَٰهِ النَّاسِ ۝ مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ۝</div>
+                <div class="bn-meaning"><strong>বাংলা অনুবাদ:</strong> বলুন, আমি আশ্রয় প্রার্থনা করছি মানুষদের রবের, মানুষদের অধিপতির, মানুষদের ইলাহের, আত্মগোপনকারী কুমন্ত্রণাদাতার অনিষ্ট হতে।</div>
+                <audio controls>
+                    <source src="https://server8.mp3quran.net/afs/114.mp3" type="audio/mpeg">
+                    আপনার ব্রাউজার অডিও প্লেয়ার সাপোর্ট করে না।
+                </audio>
+            </div>
+
         </div>
 
         <!-- Islamic Knowledge Cards Section -->
@@ -176,19 +198,6 @@
         <h3>ইসলামিক আলো ও নামাজ শিক্ষা</h3>
         <p>কপিরাইট © ২০২৬ - Md Rashed | সর্বস্বত্ব সংরক্ষিত</p>
     </footer>
-
-    <script>
-        function changeSurah() {
-            var select = document.getElementById("surahSelect");
-            var surahNum = select.value;
-            var player = document.getElementById("audioPlayer");
-            var source = document.getElementById("audioSource");
-            
-            source.src = "https://server8.mp3quran.net/afs/" + surahNum + ".mp3";
-            player.load();
-            player.play();
-        }
-    </script>
 
 </body>
 </html>
