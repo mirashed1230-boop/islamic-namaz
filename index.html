@@ -29,6 +29,10 @@
         /* Section Title */
         .section-title { font-size: 18px; color: #10b981; margin: 20px 0 15px 0; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid rgba(16, 185, 129, 0.2); padding-bottom: 8px; }
 
+        /* Quran Reader Section - Embedded Full Quran Viewer */
+        .quran-reader-box { background: #0a2e1b; border: 1px solid #10b981; border-radius: 12px; padding: 15px; margin-top: 20px; }
+        .quran-iframe { width: 100%; height: 600px; border: none; border-radius: 8px; background: #fff; }
+
         /* Islamic Services Grid */
         .grid-container { display: grid; grid-columns: 1fr; gap: 15px; }
         @media (min-width: 600px) { .grid-container { grid-template-columns: repeat(2, 1fr); } }
@@ -39,12 +43,6 @@
         .service-title { font-size: 16px; font-weight: bold; color: #f8fafc; margin-bottom: 6px; }
         .service-desc { font-size: 12px; color: #94a3b8; margin-bottom: 12px; }
         .action-btn { background: #10b981; color: #020f08; border: none; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; font-size: 13px; }
-
-        /* Quran Reader Section (New Option) */
-        .quran-reader-box { background: #0a2e1b; border: 1px solid #10b981; border-radius: 12px; padding: 20px; margin-top: 20px; }
-        .surah-select-box { width: 100%; padding: 10px; background: #051e11; border: 1px solid #10b981; color: #fbbf24; border-radius: 8px; font-size: 15px; margin-bottom: 15px; outline: none; }
-        .quran-display { background: #020f08; border-radius: 8px; padding: 20px; min-height: 200px; color: #e2e8f0; line-height: 2.2; font-size: 18px; text-align: right; border: 1px solid rgba(16, 185, 129, 0.2); }
-        .bangla-translation { text-align: left; font-size: 14px; color: #cbd5e1; margin-top: 15px; padding-top: 10px; border-top: 1px dashed rgba(16, 185, 129, 0.3); line-height: 1.8; }
 
         footer { text-align: center; margin-top: 30px; padding: 15px; color: #64748b; font-size: 12px; border-top: 1px solid rgba(255,255,255,0.05); }
     </style>
@@ -72,26 +70,15 @@
         <!-- Welcome Banner -->
         <div class="welcome-card">
             <h3>স্বাগতম</h3>
-            <p>আসসালামু আলাইকুম! "ইসলামিক আলো ও নামাজ শিক্ষা" ওয়েবসাইটে আপনাকে স্বাগতম। এখানে আপনি সঠিক নিয়মে সালাত শিক্ষা, আল-কোরআনের ১১৪টি সূরার অডিও, সম্পূর্ণ কোরআন রিডিং ও অর্থ এবং ডিজিটাল তাসবীহসহ প্রয়োজনীয় সার্ভিসসমূহ সহজে ব্যবহার করতে পারবেন।</p>
+            <p>আসসালামু আলাইকুম! "ইসলামিক আলো ও নামাজ শিক্ষা" ওয়েবসাইটে আপনাকে স্বাগতম। এখানে আপনি সঠিক নিয়মে সালাত শিক্ষা, আল-কোরআনের ১১৪টি সূরার অডিও, সম্পূর্ণ পবিত্র কোরআন শরীফ রিডিং এবং ডিজিটাল তাসবীহসহ প্রয়োজনীয় সার্ভিসসমূহ সহজে ব্যবহার করতে পারবেন।</p>
         </div>
 
-        <!-- New Feature: Full Quran Reading Section -->
-        <div class="section-title" id="quran-read"><i class="fas fa-book-quran"></i> আল-কোরআন আল-কারীম (সম্পূর্ণ কোরআন পাঠ)</div>
+        <!-- New Feature: Full Quran Reading Section (Direct Full Quran Web Reader Integration) -->
+        <div class="section-title" id="quran-read"><i class="fas fa-book-quran"></i> আল-কোরআন আল-কারীম (সম্পূর্ণ পবিত্র কুরআন পাঠ)</div>
         <div class="quran-reader-box">
-            <label style="display:block; color:#10b981; font-size:14px; margin-bottom:8px;">পড়ার জন্য সূরা নির্বাচন করুন:</label>
-            <select class="surah-select-box" id="surahSelect" onchange="loadSurahText(this.value)">
-                <option value="1">১. সূরা আল-ফাতিহা (الفاتحة)</option>
-                <option value="112">১১২. সূরা আল-ইখলাস (الإخلاص)</option>
-                <option value="113">১১৩. সূরা আল-ফালাক (الفلق)</option>
-                <option value="114">১১৪. সূরা আন-নাস (الناس)</option>
-            </select>
-
-            <div class="quran-display" id="quranArabic">
-                بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ ۝ ١ ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَـٰلَمِينَ ۝ ٢ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ ۝ ٣ مَـٰلِكِ يَوْمِ ٱلدِّينِ ۝ ٤ إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ ۝ ٥ ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ ۝ ٦ صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ ۝ ٧
-                <div class="bangla-translation" id="quranBangla">
-                    <strong>অনুবাদ:</strong> ১. পরম করুণাময় অসীম দয়ালু আল্লাহর নামে। ২. সমস্ত প্রশংসা বিশ্বজগতের প্রতিপালক আল্লাহর জন্য। ৩. যিনি পরম করুণাময় ও অসীম দয়ালু। ৪. বিচার দিনের মালিক। ৫. আমরা কেবল তোমারই ইবাদত করি এবং কেবল তোমারই সাহায্য চাই। ৬. আমাদের সরল-সঠিক পথ প্রদর্শন করো। ৭. তাদের পথ, যাদের তুমি অনুগ্রহ করেছো; তাদের পথ নয়, যারা গজবপ্রাপ্ত ও পথভ্রষ্ট।
-                </div>
-            </div>
+            <p style="font-size: 13px; color: #fbbf24; margin-bottom: 10px; text-align: center;"><i class="fas fa-info-circle"></i> নিচ থেকে যেকোনো সূরা ও পারা সিলেক্ট করে সম্পূর্ণ পবিত্র কোরআন পড়তে পারবেন:</p>
+            <!-- Embedded Al-Quran Cloud Reader for complete 114 Surahs -->
+            <iframe src="https://quran.com/?locale=bn" class="quran-iframe" title="Complete Quran Reader"></iframe>
         </div>
 
         <!-- Islamic Services Section -->
@@ -134,33 +121,5 @@
 
     </div>
 
-    <!-- JavaScript Logic for Quran Reading -->
-    <script>
-        const surahData = {
-            "1": {
-                arabic: "بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ ۝ ١ ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَـٰلَمِينَ ۝ ٢ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ ۝ ٣ مَـٰلِكِ يَوْمِ ٱلدِّينِ ۝ ٤ إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ ۝ ٥ ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ ۝ ٦ صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ ۝ ٧",
-                bangla: "<strong>অনুবাদ:</strong> ১. পরম করুণাময় অসীম দয়ালু আল্লাহর নামে। ২. সমস্ত প্রশংসা বিশ্বজগতের প্রতিপালক আল্লাহর জন্য। ৩. যিনি পরম করুণাময় ও অসীম দয়ালু। ৪. বিচার দিনের মালিক। ৫. আমরা কেবল তোমারই ইবাদত করি এবং কেবল তোমারই সাহায্য চাই। ৬. আমাদের সরল-সঠিক পথ প্রদর্শন করো। ৭. তাদের পথ, যাদের তুমি অনুগ্রহ করেছো; তাদের পথ নয়, যারা গজবপ্রাপ্ত ও পথভ্রষ্ট।"
-            },
-            "112": {
-                arabic: "قُلْ هُوَ اللَّهُ أَحَدٌ ۝ ١ اللَّهُ الصَّمَدُ ۝ ٢ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ ٣ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ ۝ ٤",
-                bangla: "<strong>অনুবাদ:</strong> ১. বলো, তিনি আল্লাহ, এক-অদ্বিতীয়। ২. আল্লাহ কারো মুখাপেক্ষী নন, সকলেই তাঁর মুখাপেক্ষী। ৩. তিনি কাউকে জন্ম দেননি এবং তাঁকেও জন্ম দেওয়া হয়নি। ৪. এবং তাঁর সমতুল্য কেউই নেই।"
-            },
-            "113": {
-                arabic: "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ۝ ١ مِن شَرِّ مَا خَلَقَ ۝ ٢ وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ ۝ ٣ وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ۝ ٤ وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ ۝ ٥",
-                bangla: "<strong>অনুবাদ:</strong> ১. বলো, আমি আশ্রয় চাচ্ছি ভোরের রবের। ২. তিনি যা সৃষ্টি করেছেন তার অনিষ্ট হতে। ৩. আর অনিষ্ট হতে আঁধার রাতের, যখন তা গভীর হয়। ৪. আর অনিষ্ট হতে গিট্রে ফুঁৎকারকারিণীদের। ৫. আর অনিষ্ট হতে হিংসুকের, যখন সে হিংসা করে।"
-            },
-            "114": {
-                arabic: "قُلْ أَعُوذُ بِرَبِّ النَّاسِ ۝ ١ مَلِكِ النَّاسِ ۝ ٢ إِلَٰهِ النَّاسِ ۝ ٣ مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ۝ ٤ الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ ۝ ٥ مِنَ الْجِنَّةِ وَالنَّاسِ ۝ ٦",
-                bangla: "<strong>অনুবাদ:</strong> ১. বলো, আমি আশ্রয় চাচ্ছি মানুষের রবের। ২. মানুষের মালিকের। ৩. মানুষের মাবুদের। ৪. আত্মগোপনকারী কুমন্ত্রণাদাতার অনিষ্ট হতে। ৫. যে মানুষকে কুমন্ত্রণা দেয় মানুষের অন্তরে। ৬. জিন ও মানুষের মধ্য হতে।"
-            }
-        };
-
-        function loadSurahText(id) {
-            if(surahData[id]) {
-                document.getElementById('quranArabic').innerHTML = surahData[id].arabic + 
-                    `<div class="bangla-translation" id="quranBangla">${surahData[id].bangla}</div>`;
-            }
-        }
-    </script>
 </body>
 </html>
