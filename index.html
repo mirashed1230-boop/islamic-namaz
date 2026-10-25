@@ -331,7 +331,7 @@
             player.play();
         }
 
-        // Smart Tasbeeh Logic (Subhanallah 33, Alhamdulillah 33, Allahu Akbar 34)
+        // Smart Tasbeeh Logic
         let totalTaps = 0;
 
         function addCount() {
@@ -345,7 +345,6 @@
         }
 
         function updateTasbeehUI() {
-            // Total taps & round calculation
             document.getElementById('totalCountDisplay').innerText = totalTaps.toLocaleString('bn-BD');
             
             let round = Math.floor(totalTaps / 100);
@@ -359,17 +358,19 @@
                 zikrText = "সুবহানাল্লাহ (১ - ৩৩ বার)";
                 currentSubCount = 0;
             } else if (mod >= 1 && mod <= 33) {
-                zikrText = "সুবহানাল্লাহ";
+                zikrText = `সুবহানাল্লাহ (${mod} - ৩৩ বার)`;
                 currentSubCount = mod;
             } else if (mod >= 34 && mod <= 66) {
-                zikrText = "আলহামদুলিল্লাহ";
-                currentSubCount = mod - 33;
+                let countNum = mod - 33;
+                zikrText = `আলহামদুলিল্লাহ (${countNum} - ৩৩ বার)`;
+                currentSubCount = countNum;
             } else {
-                zikrText = "আল্লাহু আকবার";
-                currentSubCount = mod === 0 ? 34 : mod - 66;
+                let countNum = mod === 0 ? 34 : mod - 66;
+                zikrText = `আল্লাহু আকবার (${countNum} - ৩৪ বার)`;
+                currentSubCount = countNum;
             }
 
-            document.getElementById('zikrNameDisplayinnerText' || 'zikrNameDisplay').innerText = zikrText;
+            document.getElementById('zikrNameDisplay').innerText = zikrText;
             document.getElementById('subCountDisplay').innerText = currentSubCount.toLocaleString('bn-BD');
         }
 
