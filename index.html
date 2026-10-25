@@ -28,7 +28,8 @@
 
         /* Prayer Times Widget */
         .prayer-widget { background: #082b19; border: 1px solid #10b981; border-radius: 12px; padding: 15px; margin-bottom: 25px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        .prayer-widget h4 { color: #fbbf24; font-size: 15px; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .prayer-widget h4 { color: #fbbf24; font-size: 15px; margin-bottom: 5px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .live-date-display { font-size: 13px; color: #10b981; margin-bottom: 12px; font-weight: bold; }
         .prayer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; }
         .prayer-time-card { background: #0f3d24; padding: 10px; border-radius: 8px; border: 1px solid rgba(16,185,129,0.2); }
         .prayer-name { font-size: 12px; color: #94a3b8; margin-bottom: 4px; }
@@ -102,9 +103,10 @@
                 <p>আসসালামু আলাইকুম! "ইসলামিক আলো ও নামাজ শিক্ষা" ওয়েবসাইটে আপনাকে স্বাগতম। এখান থেকে আপনি বইয়ের পাতার মতো পৃষ্ঠা উল্টে সম্পূর্ণ কোরআন পাঠ, সঠিক সালাত শিক্ষা, ১১৪টি সূরার অডিও এবং স্মার্ট ডিজিটাল তাসবীহ পড়তে পারবেন।</p>
             </div>
 
-            <!-- Live Prayer Times Widget -->
+            <!-- Live Prayer Times & Date Widget -->
             <div class="prayer-widget">
                 <h4><i class="fas fa-clock"></i> আজকের নামাজের লাইভ সময়সূচি (ঢাকা, বাংলাদেশ)</h4>
+                <div class="live-date-display" id="liveDateDisplay">তারিখ ও বার লোড হচ্ছে...</div>
                 <div class="prayer-grid">
                     <div class="prayer-time-card">
                         <div class="prayer-name">ফজর</div>
@@ -369,15 +371,9 @@
             player.play();
         }
 
-        // Fetch Live Prayer Times Automatically
+        // Fetch Live Prayer Times and Live Date Automatically
         async function fetchPrayerTimes() {
             try {
-                const today = new Date();
-                const dd = String(today.getDate()).padStart(2, '0');
-                const mm = String(today.getMonth() + 1).padStart(2, '0');
-                const yyyy = today.getFullYear();
-                const dateStr = `${dd}-${mm}-${yyyy}`;
-
                 const response = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=Dhaka&country=Bangladesh&method=1`);
                 const data = await response.json();
                 if(data && data.data && data.data.timings) {
@@ -387,14 +383,23 @@
                     document.getElementById('asrTime').innerText = format12Hour(timings.Asr);
                     document.getElementById('maghribTime').innerText = format12Hour(timings.Maghrib);
                     document.getElementById('ishaTime').innerText = format12Hour(timings.Isha);
+
+                    // Display Live Date and Day from API
+                    if(data.data.date) {
+                        const gregorian = data.data.date.gregorian;
+                        const hijri = data.data.date.hijri;
+                        const weekdayBn = translateWeekday(gregorian.weekday.en);
+                        const monthBn = translateMonth(gregorian.month.en);
+                        document.getElementById('liveDateDisplay').innerText = `${weekdayBn}, ${gregorian.day} ${monthBn} ${gregorian.year} খ্রিষ্টাব্দ (${hijri.day} ${hijri.month.ar}, ${hijri.year} হিজরী)`;
+                    }
                 }
             } catch (err) {
-                // Fallback times if offline
-                document.getElementById('fajrTime').innerText = "০৫:০০ AM";
-                document.getElementById('dhuhrTime').innerText = "১২:০৫ PM";
-                document.getElementById('asrTime').innerText = "০৪:১৫ PM";
-                document.getElementById('maghribTime').innerText = "০৫:৫০ PM";
-                document.getElementById('ishaTime').innerText = "০৭:১০ PM";
+                document.getElementById('fajrTime').innerText = "০৪:৪৪ AM";
+                document.getElementById('dhuhrTime').innerText = "১১:৪২ AM";
+                document.getElementById('asrTime').innerText = "০২:৫৮ PM";
+                document.getElementById('maghribTime').innerText = "০৫:২৪ PM";
+                document.getElementById('ishaTime').innerText = "০৬:৪০ PM";
+                document.getElementById('liveDateDisplay').innerText = "আজকের লাইভ সময়সূচি";
             }
         }
 
@@ -408,6 +413,23 @@
             }
             if (hours === 0) hours = 12;
             return `${String(hours).padStart(2, '0')}:${minutes} ${period}`;
+        }
+
+        function translateWeekday(enDay) {
+            const days = {
+                'Saturday': 'শনিবার', 'Sunday': 'রবিবার', 'Monday': 'সোমবার',
+                'Tuesday': 'মঙ্গলবার', 'Wednesday': 'বুধবার', 'Thursday': 'বৃহস্পতিবার', 'Friday': 'শুক্রবার'
+            };
+            return days[enDay] || enDay;
+        }
+
+        function translateMonth(enMonth) {
+            const months = {
+                'January': 'জানুয়ারি', 'February': 'ফেব্রুয়ারি', 'March': 'মার্চ', 'April': 'এপ্রিল',
+                'May': 'মে', 'June': 'জুন', 'July': 'জুলাই', 'August': 'আগস্ট',
+                'September': 'সেপ্টেম্বর', 'October': 'অক্টোবর', 'November': 'নভেম্বর', 'December': 'ডিসেম্বর'
+            };
+            return months[enMonth] || enMonth;
         }
 
         let totalTaps = 0;
