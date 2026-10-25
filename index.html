@@ -3,346 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ইসলামিক আলো ও নামাজ শিক্ষা - Md Rashed</title>
+    <title>ইসলামিক আলো ও নামাজ শিক্ষা</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'SolaimanLipi', 'Segoe UI', Arial, sans-serif; }
-        body { background: #0b1d13; color: #fff; min-height: 100vh; }
-        
-        /* Header & Hero Area */
-        .top-hero { background: linear-gradient(rgba(11, 29, 19, 0.85), rgba(11, 29, 19, 0.95)), url('https://images.unsplash.com/photo-1542810634-71277d95dcbb?q=80&w=1200') center/cover; padding: 30px 15px; text-align: center; border-bottom: 3px solid #d4af37; }
-        .hero-title { font-size: 28px; color: #d4af37; font-weight: bold; margin-bottom: 10px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
-        
-        /* Navigation */
-        nav { background: #123021; padding: 10px; display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; border-bottom: 1px solid rgba(212,175,55,0.3); position: sticky; top: 0; z-index: 100; }
-        nav button { background: rgba(212,175,55,0.1); border: 1px solid #d4af37; color: #d4af37; padding: 8px 14px; border-radius: 20px; cursor: pointer; font-size: 13px; transition: 0.3s; }
-        nav button.active, nav button:hover { background: #d4af37; color: #0b1d13; font-weight: bold; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: #051e11; color: #e2e8f0; min-height: 100vh; padding-bottom: 30px; }
 
-        /* Main Container */
+        /* Header Area */
+        header { background: #020f08; border-bottom: 2px solid #10b981; padding: 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .logo { font-size: 24px; font-weight: bold; color: #10b981; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 5px; }
+        .sub-logo { font-size: 13px; color: #94a3b8; }
+
+        /* Navigation Buttons */
+        .nav-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding: 15px; background: #082b19; border-bottom: 1px solid rgba(16, 185, 129, 0.2); }
+        .nav-btn { background: #0f3d24; color: #fbbf24; border: 1px solid #10b981; padding: 8px 14px; border-radius: 8px; font-size: 13px; font-weight: bold; cursor: pointer; text-decoration: none; transition: 0.3s; display: inline-flex; align-items: center; gap: 6px; }
+        .nav-btn:hover, .nav-btn.active { background: #10b981; color: #020f08; }
+
         .container { max-width: 900px; margin: 20px auto; padding: 0 15px; }
-        
-        /* Tab Content Display Logic */
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
 
-        .main-card { background: rgba(18, 48, 33, 0.9); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 12px; padding: 25px; margin-bottom: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
-        
-        .section-title { font-size: 24px; color: #d4af37; text-align: center; margin-bottom: 20px; border-bottom: 2px dashed rgba(212,175,55,0.3); padding-bottom: 10px; }
-        .sub-title { font-size: 20px; color: #fff; margin: 15px 0; border-left: 4px solid #d4af37; padding-left: 10px; }
+        /* Welcome Banner */
+        .welcome-card { background: rgba(15, 61, 36, 0.6); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 25px; }
+        .welcome-card h3 { color: #fbbf24; margin-bottom: 10px; font-size: 18px; }
+        .welcome-card p { font-size: 14px; color: #cbd5e1; line-height: 1.6; }
 
-        /* Namaz Steps Graphic Layout */
-        .step-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0; }
-        .step-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.2); border-radius: 10px; padding: 15px; text-align: center; }
-        .step-icon { font-size: 40px; color: #d4af37; margin-bottom: 10px; }
-        .step-card h4 { color: #d4af37; margin-bottom: 5px; font-size: 18px; }
-        .step-card p { font-size: 13px; color: #ddd; }
+        /* Section Title */
+        .section-title { font-size: 18px; color: #10b981; margin: 20px 0 15px 0; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid rgba(16, 185, 129, 0.2); padding-bottom: 8px; }
 
-        /* Quran Player Selector Style */
-        .surah-select-box { width: 100%; padding: 12px; background: #0b1d13; color: #d4af37; border: 1px solid #d4af37; border-radius: 8px; font-size: 16px; margin-bottom: 20px; outline: none; }
-        .surah-card { background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(212,175,55,0.3); border-radius: 10px; padding: 20px; margin-bottom: 15px; }
-        .surah-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(212,175,55,0.2); padding-bottom: 10px; margin-bottom: 15px; }
-        .surah-title { color: #d4af37; font-size: 20px; font-weight: bold; }
-        .arabic-text { font-size: 24px; color: #d4af37; font-family: 'Traditional Arabic', serif; line-height: 1.8; text-align: right; margin-bottom: 12px; }
-        .bn-meaning { font-size: 15px; color: #e0e0e0; margin-bottom: 15px; line-height: 1.6; }
-        audio { width: 100%; border-radius: 20px; outline: none; height: 40px; margin-top: 10px; }
+        /* Islamic Services Grid */
+        .grid-container { display: grid; grid-columns: 1fr; gap: 15px; }
+        @media (min-width: 600px) { .grid-container { grid-template-columns: repeat(2, 1fr); } }
 
-        /* Feature Cards Grid */
-        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-top: 20px; }
-        .feature-card { background: #123524; border: 1px solid rgba(212,175,55,0.3); border-radius: 10px; padding: 15px; text-align: center; transition: 0.3s; }
-        .feature-card:hover { transform: translateY(-5px); border-color: #d4af37; }
-        .feature-card i { font-size: 32px; color: #d4af37; margin-bottom: 10px; }
-        .feature-card h4 { font-size: 16px; color: #fff; margin-bottom: 8px; }
-        .feature-card p { font-size: 12px; color: #aaa; margin-bottom: 12px; }
-        .btn-action { background: #d4af37; color: #0b1d13; border: none; padding: 6px 12px; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 12px; }
+        .service-card { background: #0a2e1b; border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 10px; padding: 18px; text-align: center; transition: 0.3s; }
+        .service-card:hover { border-color: #10b981; transform: translateY(-3px); }
+        .service-icon { font-size: 30px; color: #fbbf24; margin-bottom: 10px; }
+        .service-title { font-size: 16px; font-weight: bold; color: #f8fafc; margin-bottom: 6px; }
+        .service-desc { font-size: 12px; color: #94a3b8; margin-bottom: 12px; }
+        .action-btn { background: #10b981; color: #020f08; border: none; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; font-size: 13px; }
 
-        /* Tasbih Section Style */
-        .tasbih-box { text-align: center; padding: 20px 10px; }
-        .tasbih-count { font-size: 55px; font-weight: bold; color: #d4af37; margin: 15px 0; text-shadow: 0 0 10px rgba(212,175,55,0.5); }
-        .tasbih-btn { width: 120px; height: 120px; border-radius: 50%; background: #d4af37; color: #0b1d13; font-size: 18px; font-weight: bold; border: none; cursor: pointer; box-shadow: 0 0 20px rgba(212,175,55,0.4); transition: 0.2s; }
-        .tasbih-btn:active { transform: scale(0.95); }
-        .btn-reset { background: rgba(255, 255, 255, 0.1); border: 1px solid #d4af37; color: #fff; padding: 8px 16px; border-radius: 5px; cursor: pointer; margin-top: 15px; }
+        /* Quran Reader Section (New Option) */
+        .quran-reader-box { background: #0a2e1b; border: 1px solid #10b981; border-radius: 12px; padding: 20px; margin-top: 20px; }
+        .surah-select-box { width: 100%; padding: 10px; background: #051e11; border: 1px solid #10b981; color: #fbbf24; border-radius: 8px; font-size: 15px; margin-bottom: 15px; outline: none; }
+        .quran-display { background: #020f08; border-radius: 8px; padding: 20px; min-height: 200px; color: #e2e8f0; line-height: 2.2; font-size: 18px; text-align: right; border: 1px solid rgba(16, 185, 129, 0.2); }
+        .bangla-translation { text-align: left; font-size: 14px; color: #cbd5e1; margin-top: 15px; padding-top: 10px; border-top: 1px dashed rgba(16, 185, 129, 0.3); line-height: 1.8; }
 
-        /* Footer */
-        footer { background: #06120b; text-align: center; padding: 25px; border-top: 2px solid #d4af37; margin-top: 40px; color: #aaa; font-size: 13px; }
-        footer h3 { color: #d4af37; margin-bottom: 10px; }
+        footer { text-align: center; margin-top: 30px; padding: 15px; color: #64748b; font-size: 12px; border-top: 1px solid rgba(255,255,255,0.05); }
     </style>
 </head>
 <body>
 
-    <!-- Header Section -->
-    <div class="top-hero">
-        <div class="hero-title"><i class="fas fa-mosque"></i> ইসলামিক আলো ও নামাজ শিক্ষা</div>
-        <p style="color: #e0e0e0; font-size: 14px;">Md Rashed এর সৌজন্যে একটি ডিজিটাল ইসলামিক প্ল্যাটফর্ম</p>
+    <!-- Header Area -->
+    <header>
+        <div class="logo"><i class="fas fa-mosque"></i> ইসলামিক আলো ও নামাজ শিক্ষা</div>
+        <div class="sub-logo">Md Rashed এর সৌজন্যে একটি ডিজিটাল ইসলামিক প্ল্যাটফর্ম</div>
+    </header>
+
+    <!-- Navigation Buttons -->
+    <div class="nav-buttons">
+        <a href="#home" class="nav-btn active"><i class="fas fa-home"></i> হোম</a>
+        <a href="#namaz" class="nav-btn"><i class="fas fa-pray"></i> নামাজ শিক্ষা</a>
+        <a href="#quran-read" class="nav-btn" style="background: #fbbf24; color: #020f08;"><i class="fas fa-quran"></i> সম্পূর্ণ কোরআন পাঠ</a>
+        <a href="#audio" class="nav-btn"><i class="fas fa-volume-up"></i> ১১৪ সূরা অডিও</a>
+        <a href="#tasbeeh" class="nav-btn"><i class="fas fa-fingerprint"></i> ডিজিটাল তাসবীহ</a>
+        <a href="#about" class="nav-btn"><i class="fas fa-info-circle"></i> আমাদের সম্পর্কে</a>
     </div>
 
-    <!-- Navigation Bar -->
-    <nav>
-        <button class="nav-btn active" onclick="switchTab('home')"><i class="fas fa-home"></i> হোম</button>
-        <button class="nav-btn" onclick="switchTab('namaz')"><i class="fas fa-book-open"></i> নামাজ শিক্ষা</button>
-        <button class="nav-btn" onclick="switchTab('quran')"><i class="fas fa-quran"></i> আল-কুরআন (১১৪ সূরা অডিও)</button>
-        <button class="nav-btn" onclick="switchTab('tasbih')"><i class="fas fa-fingerprint"></i> ডিজিটাল তাসবীহ</button>
-        <button class="nav-btn" onclick="switchTab('about')"><i class="fas fa-info-circle"></i> আমাদের সম্পর্কে</button>
-    </nav>
+    <div class="container" id="home">
 
-    <div class="container">
+        <!-- Welcome Banner -->
+        <div class="welcome-card">
+            <h3>স্বাগতম</h3>
+            <p>আসসালামু আলাইকুম! "ইসলামিক আলো ও নামাজ শিক্ষা" ওয়েবসাইটে আপনাকে স্বাগতম। এখানে আপনি সঠিক নিয়মে সালাত শিক্ষা, আল-কোরআনের ১১৪টি সূরার অডিও, সম্পূর্ণ কোরআন রিডিং ও অর্থ এবং ডিজিটাল তাসবীহসহ প্রয়োজনীয় সার্ভিসসমূহ সহজে ব্যবহার করতে পারবেন।</p>
+        </div>
 
-        <!-- 1. HOME TAB -->
-        <div id="home-tab" class="tab-content active">
-            <div class="main-card">
-                <h2 class="section-title">স্বাগতম</h2>
-                <p style="text-align: center; color: #e0e0e0; line-height: 1.6; margin-bottom: 20px;">
-                    আসসালামু আলাইকুম! "ইসলামিক আলো ও নামাজ শিক্ষা" ওয়েবসাইটে আপনাকে স্বাগতম। এখানে আপনি সঠিক নিয়মে সালাত শিক্ষা, আল-কুরআনের ১১৪টি সূরার অডিও ও অর্থ এবং ডিজিটাল তাসবীহসহ প্রয়োজনীয় সার্ভিসসমূহ সহজে ব্যবহার করতে পারবেন।
-                </p>
-            </div>
+        <!-- New Feature: Full Quran Reading Section -->
+        <div class="section-title" id="quran-read"><i class="fas fa-book-quran"></i> আল-কোরআন আল-কারীম (সম্পূর্ণ কোরআন পাঠ)</div>
+        <div class="quran-reader-box">
+            <label style="display:block; color:#10b981; font-size:14px; margin-bottom:8px;">পড়ার জন্য সূরা নির্বাচন করুন:</label>
+            <select class="surah-select-box" id="surahSelect" onchange="loadSurahText(this.value)">
+                <option value="1">১. সূরা আল-ফাতিহা (الفاتحة)</option>
+                <option value="112">১১২. সূরা আল-ইখলাস (الإخلاص)</option>
+                <option value="113">১১৩. সূরা আল-ফালাক (الفلق)</option>
+                <option value="114">১১৪. সূরা আন-নাস (الناس)</option>
+            </select>
 
-            <!-- Features Quick Access -->
-            <div class="main-card">
-                <h2 class="section-title">📚 ইসলামিক সেবাসমূহ</h2>
-                <div class="feature-grid">
-                    <div class="feature-card">
-                        <i class="fas fa-book-quran"></i>
-                        <h4>দৈনিক হাদিস</h4>
-                        <p>প্রতিদিনের সহিহ হাদিস ও শিক্ষা পড়ুন।</p>
-                        <button class="btn-action" onclick="showHadith()">পড়ুন</button>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <i class="fas fa-calculator"></i>
-                        <h4>জাকাত ক্যালকুলেটর</h4>
-                        <p>সহজে আপনার জাকাত হিসাব করুন।</p>
-                        <button class="btn-action" onclick="openZakat()">হিসাব করুন</button>
-                    </div>
-
-                    <div class="feature-card">
-                        <i class="fas fa-question-circle"></i>
-                        <h4>ইসলামিক কুইজ</h4>
-                        <p>আপনার ইসলামিক জ্ঞান যাচাই করুন।</p>
-                        <button class="btn-action" onclick="startQuiz()">কুইজ শুরু করুন</button>
-                    </div>
-
-                    <div class="feature-card">
-                        <i class="fas fa-fingerprint"></i>
-                        <h4>ডিজিটাল তাসবীহ</h4>
-                        <p>মোবাইলেই সহজে জিকির ও তাসবীহ গণনা করুন।</p>
-                        <button class="btn-action" onclick="switchTab('tasbih')">গণনা করুন</button>
-                    </div>
+            <div class="quran-display" id="quranArabic">
+                بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ ۝ ١ ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَـٰلَمِينَ ۝ ٢ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ ۝ ٣ مَـٰلِكِ يَوْمِ ٱلدِّينِ ۝ ٤ إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ ۝ ٥ ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ ۝ ٦ صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ ۝ ٧
+                <div class="bangla-translation" id="quranBangla">
+                    <strong>অনুবাদ:</strong> ১. পরম করুণাময় অসীম দয়ালু আল্লাহর নামে। ২. সমস্ত প্রশংসা বিশ্বজগতের প্রতিপালক আল্লাহর জন্য। ৩. যিনি পরম করুণাময় ও অসীম দয়ালু। ৪. বিচার দিনের মালিক। ৫. আমরা কেবল তোমারই ইবাদত করি এবং কেবল তোমারই সাহায্য চাই। ৬. আমাদের সরল-সঠিক পথ প্রদর্শন করো। ৭. তাদের পথ, যাদের তুমি অনুগ্রহ করেছো; তাদের পথ নয়, যারা গজবপ্রাপ্ত ও পথভ্রষ্ট।
                 </div>
             </div>
         </div>
 
-        <!-- 2. NAMAZ SHIKKHA TAB -->
-        <div id="namaz-tab" class="tab-content">
-            <div class="main-card">
-                <h2 class="section-title">🕌 নামাজ শিক্ষা</h2>
-                <h3 class="sub-title">ফজর নামাজের নিয়ম ও রুকনসমূহ</h3>
-                
-                <div class="step-grid">
-                    <div class="step-card">
-                        <div class="step-icon"><i class="fas fa-hands"></i></div>
-                        <h4>তাকবীর</h4>
-                        <p>"আল্লাহু আকবার"</p>
-                    </div>
-                    <div class="step-card">
-                        <div class="step-icon"><i class="fas fa-user-ninja"></i></div>
-                        <h4>রুকু</h4>
-                        <p>"সুবহানা রাব্বিয়াল আজীম"</p>
-                    </div>
-                    <div class="step-card">
-                        <div class="step-icon"><i class="fas fa-child"></i></div>
-                        <h4>সেজদা</h4>
-                        <p>"সুবহানা রাব্বিয়াল আ'লা"</p>
-                    </div>
-                </div>
+        <!-- Islamic Services Section -->
+        <div class="section-title"><i class="fas fa-cubes"></i> ইসলামিক সেবাসমূহ</div>
+        <div class="grid-container">
 
-                <h3 class="sub-title">পাঁচ ওয়াক্ত সালাতের বিবরণ</h3>
-                <div style="background: rgba(255,255,255,0.05); padding: 12px; border-radius: 8px; margin-bottom: 8px;"><strong>ফজর:</strong> ২ রাকাত সুন্নাত, ২ রাকাত ফরজ।</div>
-                <div style="background: rgba(255,255,255,0.05); padding: 12px; border-radius: 8px; margin-bottom: 8px;"><strong>জোহর:</strong> ৪ রাকাত সুন্নাত, ৪ রাকাত ফরজ, ২ রাকাত সুন্নাত, ২ রাকাত নফল।</div>
-                <div style="background: rgba(255,255,255,0.05); padding: 12px; border-radius: 8px; margin-bottom: 8px;"><strong>আসর:</strong> ৪ রাকাত সুন্নাত, ৪ রাকাত ফরজ।</div>
-                <div style="background: rgba(255,255,255,0.05); padding: 12px; border-radius: 8px; margin-bottom: 8px;"><strong>মাগরিব:</strong> ৩ রাকাত ফরজ, ২ রাকাত সুন্নাত, ২ রাকাত নফল।</div>
-                <div style="background: rgba(255,255,255,0.05); padding: 12px; border-radius: 8px; margin-bottom: 8px;"><strong>এশা:</strong> ৪ রাকাত সুন্নাত, ৪ রাকাত ফরজ, ২ রাকাত সুন্নাত, ২ রাকাত নফল, ৩ রাকাত বিতর।</div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-calculator"></i></div>
+                <div class="service-title">যাকাত ক্যালকুলেটর</div>
+                <div class="service-desc">সহজে আপনার যাকাত হিসাব করুন।</div>
+                <button class="action-btn">হিসাব করুন</button>
             </div>
+
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-question-circle"></i></div>
+                <div class="service-title">ইসলামিক কুইজ</div>
+                <div class="service-desc">আপনার ইসলামিক জ্ঞান যাচাই করুন।</div>
+                <button class="action-btn">কুইজ শুরু করুন</button>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-fingerprint"></i></div>
+                <div class="service-title">ডিজিটাল তাসবীহ</div>
+                <div class="service-desc">মোবাইলেই সহজে জিকির ও তাসবীহ গণনা করুন।</div>
+                <button class="action-btn">গণনা করুন</button>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-book-open"></i></div>
+                <div class="service-title">দৈনিক হাদিস</div>
+                <div class="service-desc">প্রতিদিনের সহীহ হাদিস ও শিক্ষা পড়ুন।</div>
+                <button class="action-btn">পড়ুন</button>
+            </div>
+
         </div>
 
-        <!-- 3. ALL QURAN AUDIO PLAYER TAB -->
-        <div id="quran-tab" class="tab-content">
-            <div class="main-card">
-                <h2 class="section-title">📖 আল-কুরআন (১১৪টি সূরা তেলাওয়াত ও অনুবাদ)</h2>
-                
-                <label style="color: #d4af37; display: block; margin-bottom: 8px; font-weight: bold;">একটি সূরা নির্বাচন করুন:</label>
-                <select id="surahSelect" class="surah-select-box" onchange="loadSurah()">
-                    <!-- 114 Surahs will load via JS -->
-                </select>
-
-                <!-- Dynamic Surah Player Card -->
-                <div class="surah-card" id="quranPlayerBox">
-                    <div class="surah-header">
-                        <span class="surah-title" id="surahTitle">১. সূরা আল-ফাতিহা</span>
-                        <span style="font-size: 12px; color: #d4af37;" id="surahMeta">মক্কী | আয়াত: ৭</span>
-                    </div>
-                    <div class="arabic-text" id="arabicText">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ ۝ ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَالَمِينَ ۝ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ ۝ مَالِكِ يَوْمِ ٱلدِّينِ ۝</div>
-                    <div class="bn-meaning" id="bnMeaning"><strong>অর্থ:</strong> পরম করুণাময় অসীম দয়ালু আল্লাহর নামে শুরু করছি। সকল প্রশংসা সৃষ্টিজগতের পালনকর্তা আল্লাহর জন্য। যিনি পরম করুণাময় ও দয়ালু। যিনি বিচার দিনের মালিক।</div>
-                    
-                    <audio id="audioPlayer" controls>
-                        <source id="audioSource" src="https://server8.mp3quran.net/afs/001.mp3" type="audio/mpeg">
-                    </audio>
-                </div>
-            </div>
-        </div>
-
-        <!-- 4. DIGITAL TASBIH TAB -->
-        <div id="tasbih-tab" class="tab-content">
-            <div class="main-card">
-                <h2 class="section-title">📿 ডিজিটাল তাসবীহ</h2>
-                <div class="tasbih-box">
-                    <h3 id="zikr-title" style="color: #d4af37; font-size: 24px;">সুবহানাল্লাহ</h3>
-                    <div class="tasbih-count" id="count-display">0</div>
-                    <button class="tasbih-btn" onclick="addCount()">ট্যাপ করুন</button>
-                    <div>
-                        <button class="btn-reset" onclick="resetTasbih()">রিসেট</button>
-                    </div>
-                    <p style="margin-top: 15px; font-size: 13px; color: #aaa;" id="total-taps">সর্বমোট জিকির: 0</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- 5. ABOUT TAB -->
-        <div id="about-tab" class="tab-content">
-            <div class="main-card" style="text-align: center;">
-                <h2 class="section-title">আমাদের সম্পর্কে</h2>
-                <p style="color: #ddd; line-height: 1.6; margin-bottom: 15px;">
-                    <strong>ইসলামিক আলো ও নামাজ শিক্ষা</strong> ওয়েবসাইটটি মানুষের কাছে সহিহ নিয়ম ও ইসলামিক তথ্য পৌঁছে দেওয়ার উদ্দেশ্যে তৈরি একটি ডিজিটাল উদ্যোগ।
-                </p>
-                <p style="color: #d4af37;"><strong>পরিচালনায়:</strong> Md Rashed</p>
-            </div>
-        </div>
+        <footer>
+            <p>ইসলামিক আলো ও নামাজ শিক্ষা © ২০২৬ | ডিজাইন ও পরিচালনায়: Md Rashed</p>
+        </footer>
 
     </div>
 
-    <!-- Footer -->
-    <footer>
-        <h3>ইসলামিক আলো ও নামাজ শিক্ষা</h3>
-        <p>কপিরাইট © ২০২৬ - Md Rashed | সর্বস্বত্ব সংরক্ষিত</p>
-    </footer>
-
-    <!-- JavaScript Logic -->
+    <!-- JavaScript Logic for Quran Reading -->
     <script>
-        // Tab Navigation
-        function switchTab(tabName) {
-            let contents = document.querySelectorAll('.tab-content');
-            contents.forEach(c => c.classList.remove('active'));
-
-            let navBtns = document.querySelectorAll('.nav-btn');
-            navBtns.forEach(b => b.classList.remove('active'));
-
-            document.getElementById(tabName + '-tab').classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // 114 Surah Data Generator & Player
-        const surahs = [
-            { id: 1, name: "আল-ফাতিহা", ar: "الفاتحة", verses: 7, type: "মক্কী", arabic: "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ ۝ ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَالَمِينَ ۝ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ ۝ مَالِكِ يَوْمِ ٱلدِّينِ ۝", meaning: "পরম করুণাময় অসীম দয়ালু আল্লাহর নামে শুরু করছি। সকল প্রশংসা সৃষ্টিজগতের পালনকর্তা আল্লাহর জন্য। যিনি পরম করুণাময় ও দয়ালু। যিনি বিচার দিনের মালিক।" },
-            { id: 2, name: "আল-বাকারা", ar: "البقرة", verses: 286, type: "মাদানী", arabic: "الم ۝ ذَٰلِكَ الْكِتَابُ لَا رَيْبَ ۛ فِيهِ ۛ هُدًى لِّلْمُتَّقِينَ ۝", meaning: "আলিফ-লাম-মীম। এ সেই কিতাব যাতে কোন সন্দেহ নেই, মুত্তাকীদের জন্য পথপ্রদর্শক।" },
-            { id: 3, name: "আলে ইমরান", ar: "آل عمران", verses: 200, type: "মাদানী", arabic: "الم ۝ اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۝", meaning: "আল্লাহ ছাড়া কোন ইলাহ নেই, তিনি চিরঞ্জীব, চিরস্থায়ী।" },
-            { id: 112, name: "আল-ইখলাস", ar: "الإخلاص", verses: 4, type: "মক্কী", arabic: "قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ ۝ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝", meaning: "বলুন, তিনিই আল্লাহ, একক। আল্লাহ অমুখাপেক্ষী। তিনি কাউকে জন্ম দেননি এবং তাঁকেও জন্ম দেওয়া হয়নি।" },
-            { id: 113, name: "আল-ফালাক", ar: "الفلق", verses: 5, type: "মক্কী", arabic: "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ۝ مِن شَرِّ مَا خَلَقَ ۝", meaning: "বলুন, আমি আশ্রয় প্রার্থনা করছি ভোরের রবের, তিনি যা সৃষ্টি করেছেন তার অনিষ্ট হতে।" },
-            { id: 114, name: "আন-নাস", ar: "الناس", verses: 6, type: "মক্কী", arabic: "قُلْ أَعُوذُ بِرَبِّ النَّاسِ ۝ مَلِكِ النَّاسِ ۝ إِلَٰهِ النَّاسِ ۝", meaning: "বলুন, আমি আশ্রয় প্রার্থনা করছি মানুষদের রবের, মানুষদের অধিপতির, মানুষদের ইলাহের।" }
-        ];
-
-        const surahNamesList = [
-            "আল-ফাতিহা","আল-বাকারা","আলে ইমরান","আন-নিসা","আল-মায়িদাহ","আল-আনআম","আল-আরাফ","আল-আনফাল","আত-তাওবাহ","ইউনুস",
-            "হুদ","ইউসুফ","আর-রাদ","ইব্রাহিম","আল-হিজর","আন-নাহল","আল-ইসরা","আল-কাহফ","মারইয়াম","ত্বোয়া-হা",
-            "আল-আনবিয়া","আল-হাজ্জ","আল-মুমিনুন","আন-নূর","আল-ফুরকান","আশ-শুয়ারা","আন-নামল","আল-কাসাস","আল-আনকাবুত","আর-রুম",
-            "লুকমান","আস-সেজদা","আল-আহজাব","সাবা","ফাতির","ইয়া-সীন","আস-সাফফাত","সাদ","আজ-জুমার","গাফির",
-            "ফুসসিলাত","আশ-শূরা","আজ-জুখরুফ","আদ-দুখান","আল-জাসিয়াহ","আল-আহকাফ","মুহাম্মদ","আল-ফাতহ","আল-হুজুরাত","কাফ",
-            "আজ-যারিয়াত","আত-তূর","আন-নাজম","আল-কামার","আর-রহমান","আল-ওয়াকিয়াহ","আল-হাদীদ","আল-মুজাদালাহ","আল-হাশর","আল-মুমতাহিনাহ",
-            "আস-সফ","আল-জুমুআহ","আল-মুনাফিকুন","আত-তাগাবুন","আত-ত্বলাক","আত-তাহরীম","আল-মুলক","আল-কলম","আল-হাক্কাহ","আল-মাআরিজ",
-            "নূহ","আল-জিন","আল-মুযযাম্মিল","আল-মুদ্দাসসির","আল-কিয়ামাহ","আল-ইনসান","আল-মুরসালাত","আন-নাবা","আন-নাযিআত","আবাসা",
-            "আত-তাকবীর","আল-ইনফিতার","আল-মুতাফফিফীন","আল-ইনশিকাক","আল-বুরুজ","আত-তারিক","আল-আলা","আল-গাশিয়াহ","আল-ফজর","আল-বালাদ",
-            "আশ-শামস","আল-লাইল","অ্যাড-দুহা","আল-ইনশিরাহ","অত-তীন","আল-আলাক","আল-কদর","আল-বায়্যিনাহ","আজ-যালজালাহ","আল-আদিয়াত",
-            "আল-কারিয়াহ","আত-তাকাসুর","আল-আসর","আল-হুমাযাহ","আল-ফীল","কুরাইশ","আল-মাউন","আল-কাওসার","আল-কাফিরুন","আন-নসর",
-            "আল-লাহাব","আল-ইখলাস","আল-ফালাক","আন-নাস"
-        ];
-
-        // Populate Select Box
-        const selectEle = document.getElementById('surahSelect');
-        surahNamesList.forEach((name, idx) => {
-            let num = idx + 1;
-            let opt = document.createElement('option');
-            opt.value = num;
-            opt.innerText = num + ". সূরা " + name;
-            selectEle.appendChild(opt);
-        });
-
-        function loadSurah() {
-            let selectedNum = parseInt(selectEle.value);
-            let formattedNum = selectedNum < 10 ? "00" + selectedNum : (selectedNum < 100 ? "0" + selectedNum : selectedNum);
-            
-            // Audio Link Source
-            let audioUrl = "https://server8.mp3quran.net/afs/" + formattedNum + ".mp3";
-            let audioPlayer = document.getElementById('audioPlayer');
-            let audioSource = document.getElementById('audioSource');
-            
-            audioSource.src = audioUrl;
-            audioPlayer.load();
-
-            // Find info or set default
-            let surahData = surahs.find(s => s.id === selectedNum);
-            
-            if(surahData) {
-                document.getElementById('surahTitle').innerText = selectedNum + ". সূরা " + surahData.name + " (" + surahData.ar + ")";
-                document.getElementById('surahMeta').innerText = surahData.type + " | আয়াত: " + surahData.verses;
-                document.getElementById('arabicText').innerText = surahData.arabic;
-                document.getElementById('bnMeaning').innerText = "অর্থ: " + surahData.meaning;
-            } else {
-                document.getElementById('surahTitle').innerText = selectedNum + ". সূরা " + surahNamesList[selectedNum - 1];
-                document.getElementById('surahMeta').innerText = "তেলাওয়াত শুনুন";
-                document.getElementById('arabicText').innerText = "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ";
-                document.getElementById('bnMeaning').innerText = "সম্পূর্ণ সূরার চমৎকার অডিও শুনতে নিচের প্লেয়ার চালু করুন।";
+        const surahData = {
+            "1": {
+                arabic: "بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ ۝ ١ ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَـٰلَمِينَ ۝ ٢ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ ۝ ٣ مَـٰلِكِ يَوْمِ ٱلدِّينِ ۝ ٤ إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ ۝ ٥ ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ ۝ ٦ صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ ۝ ٧",
+                bangla: "<strong>অনুবাদ:</strong> ১. পরম করুণাময় অসীম দয়ালু আল্লাহর নামে। ২. সমস্ত প্রশংসা বিশ্বজগতের প্রতিপালক আল্লাহর জন্য। ৩. যিনি পরম করুণাময় ও অসীম দয়ালু। ৪. বিচার দিনের মালিক। ৫. আমরা কেবল তোমারই ইবাদত করি এবং কেবল তোমারই সাহায্য চাই। ৬. আমাদের সরল-সঠিক পথ প্রদর্শন করো। ৭. তাদের পথ, যাদের তুমি অনুগ্রহ করেছো; তাদের পথ নয়, যারা গজবপ্রাপ্ত ও পথভ্রষ্ট।"
+            },
+            "112": {
+                arabic: "قُلْ هُوَ اللَّهُ أَحَدٌ ۝ ١ اللَّهُ الصَّمَدُ ۝ ٢ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ ٣ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ ۝ ٤",
+                bangla: "<strong>অনুবাদ:</strong> ১. বলো, তিনি আল্লাহ, এক-অদ্বিতীয়। ২. আল্লাহ কারো মুখাপেক্ষী নন, সকলেই তাঁর মুখাপেক্ষী। ৩. তিনি কাউকে জন্ম দেননি এবং তাঁকেও জন্ম দেওয়া হয়নি। ৪. এবং তাঁর সমতুল্য কেউই নেই।"
+            },
+            "113": {
+                arabic: "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ۝ ١ مِن شَرِّ مَا خَلَقَ ۝ ٢ وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ ۝ ٣ وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ۝ ٤ وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ ۝ ٥",
+                bangla: "<strong>অনুবাদ:</strong> ১. বলো, আমি আশ্রয় চাচ্ছি ভোরের রবের। ২. তিনি যা সৃষ্টি করেছেন তার অনিষ্ট হতে। ৩. আর অনিষ্ট হতে আঁধার রাতের, যখন তা গভীর হয়। ৪. আর অনিষ্ট হতে গিট্রে ফুঁৎকারকারিণীদের। ৫. আর অনিষ্ট হতে হিংসুকের, যখন সে হিংসা করে।"
+            },
+            "114": {
+                arabic: "قُلْ أَعُوذُ بِرَبِّ النَّاسِ ۝ ١ مَلِكِ النَّاسِ ۝ ٢ إِلَٰهِ النَّاسِ ۝ ٣ مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ۝ ٤ الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ ۝ ٥ مِنَ الْجِنَّةِ وَالنَّاسِ ۝ ٦",
+                bangla: "<strong>অনুবাদ:</strong> ১. বলো, আমি আশ্রয় চাচ্ছি মানুষের রবের। ২. মানুষের মালিকের। ৩. মানুষের মাবুদের। ৪. আত্মগোপনকারী কুমন্ত্রণাদাতার অনিষ্ট হতে। ৫. যে মানুষকে কুমন্ত্রণা দেয় মানুষের অন্তরে। ৬. জিন ও মানুষের মধ্য হতে।"
             }
-        }
+        };
 
-        // Tasbih Functions
-        let count = 0;
-        let total = 0;
-        let zikrs = ["সুবহানাল্লাহ", "আলহামদুলিল্লাহ", "আল্লাহু আকবার", "লা ইলাহা ইল্লাল্লাহ"];
-        let zikrIdx = 0;
-
-        function addCount() {
-            count++;
-            total++;
-            document.getElementById('count-display').innerText = count;
-            document.getElementById('total-taps').innerText = "সর্বমোট জিকির: " + total;
-
-            if (count >= 33) {
-                alert("৩৩ বার পূর্ণ হয়েছে: " + zikrs[zikrIdx]);
-                count = 0;
-                zikrIdx = (zikrIdx + 1) % zikrs.length;
-                document.getElementById('zikr-title').innerText = zikrs[zikrIdx];
-                document.getElementById('count-display').innerText = count;
+        function loadSurahText(id) {
+            if(surahData[id]) {
+                document.getElementById('quranArabic').innerHTML = surahData[id].arabic + 
+                    `<div class="bangla-translation" id="quranBangla">${surahData[id].bangla}</div>`;
             }
-        }
-
-        function resetTasbih() {
-            count = 0;
-            total = 0;
-            zikrIdx = 0;
-            document.getElementById('count-display').innerText = 0;
-            document.getElementById('total-taps').innerText = "সর্বমোট জিকির: 0";
-            document.getElementById('zikr-title').innerText = zikrs[0];
-        }
-
-        // Features Alert
-        function showHadith() { alert("দৈনিক হাদিস:\n'তোমাদের মধ্যে সর্বোত্তম সেই ব্যক্তি, যে কুরআন শেখে এবং অন্যকে শেখায়।' (সহিহ বুখারী)"); }
-        function openZakat() {
-            let amount = prompt("আপনার মোট সঞ্চিত অর্থের পরিমাণ (টাকায়) লিখুন:");
-            if (amount && !isNaN(amount)) { alert("আপনার আনুমানিক যাকাত (২.৫%): " + (parseFloat(amount) * 0.025).toFixed(2) + " টাকা"); }
-        }
-        function startQuiz() {
-            let ans = prompt("প্রশ্ন: ইসলামের স্তম্ভ কয়টি?\n১) ৪টি\n২) ৫টি\n৩) ৭টি");
-            if (ans === "2" || ans === "৫") { alert("মাশাল্লাহ! সঠিক উত্তর হয়েছে। ইসলামের স্তম্ভ ৫টি।"); }
-            else if (ans !== null) { alert("ভুল উত্তর! সঠিক উত্তর হবে ৫টি।"); }
         }
     </script>
-
 </body>
 </html>
