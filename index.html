@@ -10,7 +10,7 @@
 <meta property="og:title" content="ইসলামিক আলো ও নামাজ শিক্ষা - ইসলামের আলো BD">
 <meta property="og:description" content="কুরআন পাঠ, নামাজের সময়সূচি, সূরা অডিও, দোয়া ও ডিজিটাল তাসবীহ।">
 <meta property="og:type" content="website">
-<!-- og:image যোগ করতে: <meta property="og:image" content="https://আপনার-সাইট/cover.jpg"> -->
+<meta property="og:image" content="header-bg.jpg">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🕌%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,11 +21,415 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{min-height:100vh;color:var(--text);font-family:"Noto Sans Bengali","Segoe UI",sans-serif;line-height:1.7;background:linear-gradient(180deg,#03140c,#062719 45%,#031a10);overflow-x:hidden}
 button,select,input{font:inherit}
-header{text-align:center;padding:24px 16px;background:#02110a;border-bottom:2px solid var(--em)}
-.logo{color:var(--em);font-weight:800;font-size:clamp(22px,5vw,34px);line-height:1.4}
-.sub{color:var(--muted);font-size:clamp(12px,2.5vw,15px);margin-top:6px}
+header{background:#02110a;border-bottom:2px solid var(--em);line-height:0}
+.banner{display:block;width:100%;max-width:1200px;margin:0 auto;height:auto}
+.mhead{display:none}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 nav{position:sticky;top:0;z-index:20;display:flex;justify-content:center;gap:8px;padding:10px;background:rgba(4,30,18,.96);border-bottom:1px solid var(--line)}
 .nav-btn{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 14px;border:1px solid var(--line);border-radius:12px;background:#0a3524;color:var(--text);font-weight:700;font-size:14px;cursor:pointer}
 .nav-btn.active{background:var(--em);color:#032014;border-color:var(--em)}
 .container{width:min(100% - 24px,960px);margin:22px auto}
 .tab{display:none}.tab.active{display:block}
+.card{background:linear-gradient(145deg,#0b3d27,#04230f);border:1px solid var(--line);border-radius:20px;padding:22px;margin-bottom:20px}
+.center{text-align:center}
+h2.title{color:var(--em);font-size:clamp(19px,4vw,24px);margin:6px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+h2.title i,.gold{color:var(--gold)}
+.next{border-color:rgba(247,201,72,.5)}
+.next .big{font-size:clamp(22px,6vw,32px);font-weight:800;color:var(--gold)}
+.date{color:var(--em);font-weight:700;font-size:14px}
+.grid5{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:14px}
+.pt{padding:12px 6px;background:rgba(3,27,17,.8);border:1px solid var(--line);border-radius:14px;text-align:center}
+.pt.now{border-color:var(--gold);background:rgba(247,201,72,.12)}
+.pt small{display:block;color:var(--muted)}.pt b{color:var(--em)}
+.services{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.svc{padding:20px 12px;text-align:center;cursor:pointer;background:#0a3524;border:1px solid var(--line);border-radius:18px;color:var(--text)}
+.svc i{font-size:26px;color:var(--gold);margin-bottom:8px}.svc b{display:block}.svc p{font-size:13px;color:var(--muted)}
+.dua .arabic{font-family:Amiri,serif;font-size:26px;direction:rtl;text-align:right;line-height:2.1;margin:8px 0}
+.ref{color:var(--muted);font-size:12px}
+select,.search{width:100%;max-width:420px;background:#031a10;color:var(--text);border:1px solid var(--em);padding:10px 12px;border-radius:10px}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
+.sbtn{background:#0a3524;color:var(--gold);border:1px solid var(--line);border-radius:10px;padding:8px 12px;cursor:pointer;font-weight:700}
+.sheet-title{text-align:center;color:var(--gold);font-size:24px;font-weight:800;margin-bottom:10px}
+.bismillah{font-family:Amiri,serif;text-align:center;font-size:30px;color:var(--gold);margin-bottom:14px}
+.ayah{background:#fffdf4;color:#1a2820;border-radius:14px;padding:16px;margin-bottom:12px;border:1px solid #e6dfc9}
+.ayah .num{display:inline-block;background:#0b7650;color:#fff;border-radius:20px;padding:0 10px;font-size:13px;margin-bottom:6px}
+.ayah .ar{font-family:Amiri,"Traditional Arabic",serif;direction:rtl;text-align:right;font-size:var(--fs,30px);line-height:2.2}
+.ayah .bn{margin-top:8px;padding:10px 12px;background:#f0fdf4;border-left:4px solid #10b981;border-radius:8px;font-size:calc(var(--fs,30px) * .52)}
+.navrow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px}
+.turn{background:var(--gold);color:#1c210f;border:0;border-radius:12px;padding:10px 14px;font-weight:800;cursor:pointer}
+.turn:disabled{opacity:.35;cursor:not-allowed}
+.status{min-height:24px;color:var(--gold);font-size:13px;margin-top:10px}
+audio{width:100%;max-width:600px;margin-top:16px}
+.steps{padding-left:22px}.steps li{margin:6px 0}
+.note{margin-top:14px;padding:12px;border-radius:12px;background:rgba(247,201,72,.08);border:1px solid rgba(247,201,72,.25);color:#f7e8b3;font-size:13px}
+.lesson h3{color:var(--gold);margin-bottom:10px}
+.tcard{max-width:480px;margin:0 auto;text-align:center}
+.info{display:flex;justify-content:space-between;padding:10px;background:#02170d;border:1px solid var(--line);border-radius:12px;font-size:14px;color:var(--muted)}
+.info span{color:var(--gold);font-weight:800}
+.zikr{margin:14px 0 4px;color:var(--gold);font-weight:800;font-size:20px}
+.tap{width:200px;height:200px;border-radius:50%;margin:14px auto;border:6px solid var(--em);background:radial-gradient(circle,#0e5a3a,#06301f);color:var(--gold);font-size:64px;font-weight:800;cursor:pointer;display:grid;place-items:center;touch-action:manipulation;user-select:none}
+.tap:active{transform:scale(.96)}
+.reset{background:#b83232;color:#fff;border:0;border-radius:30px;padding:10px 22px;font-weight:800;cursor:pointer}
+footer{text-align:center;max-width:960px;margin:24px auto 0;padding:18px 12px;color:#9db4a7;font-size:12px;border-top:1px solid var(--line)}
+footer strong{color:var(--em)}
+@media(max-width:650px){
+.banner{display:none}
+.mhead{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;text-align:center;line-height:1.5;height:230px;padding:0 14px 16px;background:linear-gradient(180deg,rgba(2,17,10,0) 30%,rgba(2,17,10,.92) 100%),url(header-bg.jpg) top center/220% auto no-repeat #02110a}
+.mhead .mt{color:var(--em);font-weight:800;font-size:25px;line-height:1.35;text-shadow:0 2px 8px #000}
+.mhead .ms{color:#d6e6dc;font-size:13px;margin-top:4px}
+body{padding-bottom:76px}
+nav{position:fixed;top:auto;bottom:0;left:0;right:0;padding:6px;gap:4px;border-top:1px solid var(--line);border-bottom:0}
+.nav-btn{flex:1;flex-direction:column;gap:2px;padding:6px 2px;font-size:11px;min-height:50px;border:0;background:transparent}
+.nav-btn.active{background:var(--em)}
+.grid5{grid-template-columns:repeat(2,1fr)}.pt:last-child{grid-column:1/-1}
+.tap{width:170px;height:170px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <h1 class="sr-only">ইসলামিক আলো ও নামাজ শিক্ষা — Md Rashed এর সৌজন্যে একটি ডিজিটাল ইসলামিক প্ল্যাটফর্ম</h1>
+  <img class="banner" src="header-bg.jpg" width="1600" height="899" alt="ইসলামিক আলো ও নামাজ শিক্ষা - Md Rashed এর সৌজন্যে একটি ডিজিটাল ইসলামিক প্ল্যাটফর্ম">
+  <div class="mhead" aria-hidden="true"><div class="mt">ইসলামিক আলো ও নামাজ শিক্ষা</div><div class="ms">Md Rashed এর সৌজন্যে একটি ডিজিটাল ইসলামিক প্ল্যাটফর্ম</div></div>
+</header>
+
+<nav aria-label="প্রধান মেনু">
+  <button class="nav-btn active" data-tab="home"><i class="fas fa-home"></i><span>হোম</span></button>
+  <button class="nav-btn" data-tab="quran"><i class="fas fa-book-quran"></i><span>কোরআন</span></button>
+  <button class="nav-btn" data-tab="namaz"><i class="fas fa-person-praying"></i><span>নামাজ</span></button>
+  <button class="nav-btn" data-tab="audio"><i class="fas fa-volume-up"></i><span>অডিও</span></button>
+  <button class="nav-btn" data-tab="tasbeeh"><i class="fas fa-fingerprint"></i><span>তাসবীহ</span></button>
+</nav>
+
+<main class="container">
+<section id="home" class="tab active">
+  <div class="card center"><h3 class="gold">স্বাগতম</h3>
+    <p>আসসালামু আলাইকুম! এখানে সূরা ধরে কুরআন পাঠ, নামাজের সময়, সূরা অডিও, নামাজ শিক্ষা, দৈনিক দোয়া ও তাসবীহ ব্যবহার করতে পারবেন।</p></div>
+
+  <div class="card center next">
+    <div class="ref">পরবর্তী নামাজ</div>
+    <div class="big" id="nextName">লোড হচ্ছে...</div>
+    <div id="nextCount" class="date">--</div>
+    <div class="date" id="dateLine" style="margin-top:8px"></div>
+    <div class="grid5" id="prayerGrid"></div>
+    <p class="ref" style="margin-top:10px">ঢাকার সময়, কারাচি বিশ্ববিদ্যালয় পদ্ধতি, আসর হানাফি মতে। স্থানভেদে সামান্য পার্থক্য হতে পারে।</p>
+  </div>
+
+  <h2 class="title"><i class="fas fa-cubes"></i> ইসলামিক সেবাসমূহ</h2>
+  <div class="services">
+    <button class="svc" data-go="quran"><i class="fas fa-book-open"></i><b>কোরআন পাঠ</b><p>আরবি ও বাংলা অনুবাদ</p></button>
+    <button class="svc" data-go="audio"><i class="fas fa-volume-up"></i><b>১১৪ সূরা অডিও</b><p>তিলাওয়াত শুনুন</p></button>
+    <button class="svc" data-go="namaz"><i class="fas fa-person-praying"></i><b>নামাজ শিক্ষা</b><p>ওজু ও নামাজের ধাপ</p></button>
+    <button class="svc" data-go="tasbeeh"><i class="fas fa-fingerprint"></i><b>ডিজিটাল তাসবীহ</b><p>জিকির গণনা</p></button>
+  </div>
+
+  <div class="card dua" style="margin-top:20px;border-left:4px solid var(--gold)">
+    <b class="gold"><i class="fas fa-star-and-crescent"></i> আজকের দোয়া</b>
+    <div id="duaTitle" style="color:var(--em);font-weight:700;margin-top:6px"></div>
+    <div class="arabic" id="duaAr"></div>
+    <p id="duaBn"></p><p class="ref" id="duaRef"></p>
+  </div>
+</section>
+
+<section id="quran" class="tab">
+  <h2 class="title"><i class="fas fa-book-reader"></i> পবিত্র কুরআন</h2>
+  <div class="card">
+    <div class="bar">
+      <input class="search" id="surahSearch" placeholder="সূরা খুঁজুন (নাম বা নম্বর)" aria-label="সূরা খুঁজুন">
+      <select id="quranSelect" aria-label="সূরা নির্বাচন"></select>
+    </div>
+    <div class="bar">
+      <button class="sbtn" id="fsMinus" aria-label="ফন্ট ছোট">A−</button>
+      <button class="sbtn" id="fsPlus" aria-label="ফন্ট বড়">A+</button>
+      <span class="ref">শেষ পড়া সূরা স্বয়ংক্রিয়ভাবে সংরক্ষিত হয়</span>
+    </div>
+    <div id="sheet" aria-live="polite">
+      <div class="sheet-title" id="bookTitle"></div>
+      <div class="bismillah" id="bism" hidden>بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ</div>
+      <div id="ayahs"></div>
+    </div>
+    <div class="navrow">
+      <button class="turn" id="prevBtn"><i class="fas fa-angle-left"></i> পূর্ববর্তী</button>
+      <span class="gold" id="pageInd"></span>
+      <button class="turn" id="nextBtn">পরবর্তী <i class="fas fa-angle-right"></i></button>
+    </div>
+    <p class="status" id="qStatus" role="status"></p>
+  </div>
+</section>
+
+<section id="audio" class="tab">
+  <h2 class="title"><i class="fas fa-volume-up"></i> সূরা অডিও তিলাওয়াত</h2>
+  <div class="card center">
+    <p class="gold">সূরা নির্বাচন করুন (শেষ হলে পরেরটি নিজে চলবে)</p><br>
+    <select id="audioSelect" aria-label="অডিওর জন্য সূরা"></select><br>
+    <audio id="player" controls preload="none"></audio>
+    <p class="status" id="aStatus" role="status"></p>
+  </div>
+</section>
+
+<section id="namaz" class="tab">
+  <h2 class="title"><i class="fas fa-person-praying"></i> নামাজ শিক্ষা</h2>
+  <div class="card lesson">
+    <h3>ওজুর ধাপ</h3>
+    <ol class="steps">
+      <li>নিয়ত করে "বিসমিল্লাহ" বলুন।</li><li>দুই হাত কবজি পর্যন্ত তিনবার ধুয়ে নিন।</li>
+      <li>তিনবার কুলি করুন এবং নাকে পানি দিন।</li><li>পুরো মুখমণ্ডল তিনবার ধুয়ে নিন।</li>
+      <li>দুই হাত কনুইসহ তিনবার ধুন (আগে ডান, পরে বাম)।</li>
+      <li>মাথা মাসেহ করুন, এরপর কান মাসেহ করুন।</li><li>দুই পা টাখনুসহ তিনবার ধুন (আগে ডান, পরে বাম)।</li>
+    </ol>
+  </div>
+  <div class="card lesson">
+    <h3>নামাজের ধাপ (সংক্ষেপে)</h3>
+    <ol class="steps">
+      <li>কিবলামুখী হয়ে নিয়ত করুন, "আল্লাহু আকবার" বলে তাকবীর দিন ও হাত বাঁধুন।</li>
+      <li>সানা, তাআউয, বিসমিল্লাহ, সূরা ফাতিহা ও অন্য একটি সূরা পড়ুন।</li>
+      <li>"আল্লাহু আকবার" বলে রুকুতে যান: "সুবহানা রাব্বিয়াল আযিম"।</li>
+      <li>"সামিআল্লাহু লিমান হামিদাহ" বলে উঠুন, "রব্বানা লাকাল হামদ" বলুন।</li>
+      <li>সিজদা: "সুবহানা রাব্বিয়াল আলা" (তিনবার), বসে আবার সিজদা।</li>
+      <li>শেষ বৈঠকে আত্তাহিয়্যাতু, দরুদ ও দোয়া মাসুরা পড়ে ডানে-বামে সালাম ফিরান।</li>
+    </ol>
+  </div>
+  <div class="card lesson">
+    <h3>পাঁচ ওয়াক্তের রাকাত (হানাফি প্রচলিত)</h3>
+    <ol class="steps">
+      <li><b>ফজর:</b> ২ সুন্নাত, ২ ফরজ।</li>
+      <li><b>যোহর:</b> ৪ সুন্নাত, ৪ ফরজ, ২ সুন্নাত।</li>
+      <li><b>আসর:</b> ৪ ফরজ (আগে ৪ রাকাত গাইরে মুয়াক্কাদা সুন্নাত)।</li>
+      <li><b>মাগরিব:</b> ৩ ফরজ, ২ সুন্নাত।</li>
+      <li><b>এশা:</b> ৪ ফরজ, ২ সুন্নাত, ৩ বিতর।</li>
+    </ol>
+    <div class="note">এটি সংক্ষিপ্ত পরিচিতি। মাজহাবভেদে কিছু পার্থক্য আছে; সঠিকভাবে শিখতে নির্ভরযোগ্য আলেমের সাহায্য নিন।</div>
+  </div>
+</section>
+
+<section id="tasbeeh" class="tab">
+  <h2 class="title"><i class="fas fa-fingerprint"></i> ডিজিটাল তাসবীহ</h2>
+  <div class="card tcard">
+    <select id="mode" aria-label="তাসবীহের ধরন">
+      <option value="fatimi">ফাতিমি তাসবীহ (৩৩ + ৩৩ + ৩৪)</option>
+      <option value="33">৩৩ বার করে রাউন্ড</option>
+      <option value="100">১০০ বার করে রাউন্ড</option>
+    </select>
+    <div class="info" style="margin-top:14px">
+      <div>মোট: <span id="total">০০</span></div><div>রাউন্ড: <span id="rounds">০০</span></div>
+    </div>
+    <div class="zikr" id="zikr">সুবহানাল্লাহ</div>
+    <div class="ref" id="zprog"></div>
+    <button class="tap" id="tap" aria-label="গণনা করুন"><span id="sub">০০</span></button>
+    <button class="reset" id="reset"><i class="fas fa-rotate-left"></i> রিস্টার্ট</button>
+    <p class="status" id="tStatus" role="status"></p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <p>ইসলামিক আলো ও নামাজ শিক্ষা © <span id="year"></span> | পরিচালনা ও ডিজাইনে: <strong>Md Rashed</strong></p>
+  <p style="margin-top:6px">কুরআন ও অনুবাদ: <a style="color:var(--em)" href="https://alquran.cloud" target="_blank" rel="noopener">AlQuran.Cloud</a> (বাংলা: bn.bengali) · অডিও: মিশারি আল-আফাসি, <a style="color:var(--em)" href="https://mp3quran.net" target="_blank" rel="noopener">mp3quran.net</a> · নামাজের সময়: <a style="color:var(--em)" href="https://aladhan.com" target="_blank" rel="noopener">AlAdhan</a></p>
+</footer>
+
+<script>
+const $=id=>document.getElementById(id);
+const bn=n=>String(n).replace(/\d/g,d=>"০১২৩৪৫৬৭৮৯"[d]);
+const store={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:v}catch(e){return d}},set(k,v){try{localStorage.setItem(k,String(v))}catch(e){}}};
+
+const names=["আল-ফাতিহা","আল-বাকারা","আলে ইমরান","আন-নিসা","আল-মায়েদা","আল-আনআম","আল-আরাফ","আল-আনফাল","আত-তাওবা","ইউনুস","হুদ","ইউসুফ","আর-রাদ","ইব্রাহিম","আল-হিজর","আন-নাহল","বনি ইসরাইল","আল-কাহফ","মারইয়াম","ত্বহা","আল-আম্বিয়া","আল-হাজ্জ","আল-মুমিনুন","আন-নূর","আল-ফুরকান","আশ-শুআরা","আন-নামল","আল-কাসাস","আল-আনকাবুত","আর-রূম","লুকমান","আস-সাজদা","আল-আহযাব","সাবা","ফাতির","ইয়াসিন","আস-সাফফাত","সোয়াদ","আয-যুমার","গাফির","ফুসসিলাত","আশ-শুরা","আয-যুখরুফ","আদ-দুখান","আল-জাসিয়া","আল-আহকাফ","মুহাম্মদ","আল-ফাতহ","আল-হুজুরাত","ক্বাফ","আয-যারিয়াত","আত-তূর","আন-নাজম","আল-কামার","আর-রহমান","আল-ওয়াকিয়া","আল-হাদিদ","আল-মুজাদালাহ","আল-হাশর","আল-মুমতাহিনাহ","আস-সাফ","আল-জুমুআ","আল-মুনাফিকুন","আত-তাগাবুন","আত-ত্বলাক","আত-তাহরিম","আল-মুলক","আল-ক্বলম","আল-হাক্কাহ","আল-মাআরিজ","নূহ","আল-জিন","আল-মুযযাম্মিল","আল-মুদ্দাসসির","আল-কিয়ামাহ","আল-ইনসান","আল-মুরসালাত","আন-নাবা","আন-নাযিআত","আবাসা","আত-তাকভির","আল-ইনফিতার","আল-মুতাফফিফিন","আল-ইনশিকাক","আল-বুরুজ","আত-তারিক","আল-আলা","আল-গাশিয়াহ","আল-ফজর","আল-বালাদ","আশ-শামস","আল-লাইল","আদ-দুহা","আশ-শারহ","আত-তিন","আল-আলাক","আল-কদর","আল-বাইয়্যিনাহ","আয-যালযালাহ","আল-আদিয়াত","আল-কারিআহ","আত-তাকাসুর","আল-আসর","আল-হুমাযাহ","আল-ফিল","কুরাইশ","আল-মাউন","আল-কাওসার","আল-কাফিরুন","আন-নসর","আল-মাসাদ","আল-ইখলাস","আল-ফালাক","আন-নাস"];
+const label=i=>`${bn(i+1)}. সূরা ${names[i]}`;
+
+/* ---------- ট্যাব ---------- */
+function switchTab(t){
+  document.querySelectorAll(".tab").forEach(s=>s.classList.toggle("active",s.id===t));
+  document.querySelectorAll(".nav-btn").forEach(b=>b.classList.toggle("active",b.dataset.tab===t));
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+document.querySelectorAll(".nav-btn").forEach(b=>b.onclick=()=>switchTab(b.dataset.tab));
+document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>switchTab(b.dataset.go));
+
+/* ---------- কুরআন ---------- */
+let cur=Math.min(114,Math.max(1,Number(store.get("lastSurah",1))||1));
+let fs=Number(store.get("fontSize",30))||30;
+const qSel=$("quranSelect"),aSel=$("audioSelect");
+
+function buildSelect(sel,filter){
+  const f=(filter||"").trim();
+  const v=sel.value;
+  sel.innerHTML="";
+  names.forEach((_,i)=>{
+    const text=label(i);
+    if(f&&!text.includes(f)&&!String(i+1).startsWith(f)&&!bn(i+1).startsWith(f))return;
+    const o=document.createElement("option");o.value=String(i+1);o.textContent=text;sel.appendChild(o);
+  });
+  if([...sel.options].some(o=>o.value===v))sel.value=v;
+}
+buildSelect(qSel);buildSelect(aSel);
+$("surahSearch").oninput=e=>{buildSelect(qSel,e.target.value);qSel.value=String(cur)};
+
+function stripBismillah(text){
+  const w=text.trim().split(/\s+/);
+  return w.slice(4).join(" ");
+}
+
+async function loadSurah(n){
+  n=Math.min(114,Math.max(1,Number(n)||1));cur=n;store.set("lastSurah",n);
+  $("bookTitle").textContent=label(n-1);
+  $("pageInd").textContent=`সূরা ${bn(n)} / ১১৪`;
+  $("prevBtn").disabled=n===1;$("nextBtn").disabled=n===114;
+  if(![...qSel.options].some(o=>o.value===String(n))){$("surahSearch").value="";buildSelect(qSel)}
+  qSel.value=String(n);
+  $("ayahs").textContent="লোড হচ্ছে...";$("bism").hidden=true;
+  $("qStatus").textContent="কুরআনের তথ্য আনা হচ্ছে...";
+  try{
+    const [a,b]=await Promise.all([fetch(`https://api.alquran.cloud/v1/surah/${n}/quran-uthmani`),fetch(`https://api.alquran.cloud/v1/surah/${n}/bn.bengali`)]);
+    if(!a.ok||!b.ok)throw 0;
+    const [aj,bj]=await Promise.all([a.json(),b.json()]);
+    if(aj.code!==200||bj.code!==200)throw 0;
+    if(n!==cur)return;
+    const box=$("ayahs");box.textContent="";
+    $("bism").hidden=(n===1||n===9);
+    aj.data.ayahs.forEach((ay,i)=>{
+      let t=ay.text;
+      if(i===0&&n!==1&&n!==9&&t.startsWith("بِسْمِ"))t=stripBismillah(t);
+      const d=document.createElement("div");d.className="ayah";
+      const num=document.createElement("span");num.className="num";num.textContent=`আয়াত ${bn(i+1)}`;
+      const ar=document.createElement("div");ar.className="ar";ar.textContent=t;
+      const bg=document.createElement("div");bg.className="bn";bg.textContent=bj.data.ayahs[i].text;
+      d.append(num,ar,bg);box.appendChild(d);
+    });
+    $("qStatus").textContent=`${bn(aj.data.ayahs.length)}টি আয়াত লোড হয়েছে।`;
+  }catch(e){
+    $("ayahs").textContent="ইন্টারনেট বা সার্ভার সমস্যার কারণে লোড করা যায়নি। আবার চেষ্টা করুন।";
+    $("qStatus").textContent="লোড ব্যর্থ হয়েছে।";
+  }
+}
+qSel.onchange=()=>loadSurah(qSel.value);
+$("prevBtn").onclick=()=>loadSurah(cur-1);
+$("nextBtn").onclick=()=>loadSurah(cur+1);
+function applyFs(){document.documentElement.style.setProperty("--fs",fs+"px");store.set("fontSize",fs)}
+$("fsPlus").onclick=()=>{fs=Math.min(52,fs+3);applyFs()};
+$("fsMinus").onclick=()=>{fs=Math.max(22,fs-3);applyFs()};
+applyFs();
+
+/* ---------- অডিও ---------- */
+const player=$("player");
+const audioUrl=n=>`https://server8.mp3quran.net/afs/${String(n).padStart(3,"0")}.mp3`;
+let audioN=1;
+function playAudio(n){
+  audioN=Math.min(114,Math.max(1,Number(n)||1));
+  aSel.value=String(audioN);
+  $("aStatus").textContent="অডিও লোড হচ্ছে...";
+  player.src=audioUrl(audioN);player.load();
+  const p=player.play();
+  if(p&&p.then)p.then(()=>$("aStatus").textContent=`চলছে: ${label(audioN-1)}`).catch(()=>$("aStatus").textContent="চালু করতে প্লেয়ারের ▶ বোতামে চাপ দিন।");
+}
+aSel.onchange=()=>playAudio(aSel.value);
+player.src=audioUrl(1);
+player.onerror=()=>$("aStatus").textContent="অডিও লোড করা যায়নি। ইন্টারনেট পরীক্ষা করুন বা অন্য সূরা চেষ্টা করুন।";
+player.onended=()=>{if(audioN<114)playAudio(audioN+1)};
+qSel.addEventListener("change",()=>{if(player.paused){audioN=Number(qSel.value);aSel.value=qSel.value;player.src=audioUrl(audioN)}});
+
+/* ---------- নামাজের সময় ---------- */
+const prayers=[["Fajr","ফজর"],["Dhuhr","যোহর"],["Asr","আসর"],["Maghrib","মাগরিব"],["Isha","এশা"]];
+const hijriMonths=["মুহাররম","সফর","রবিউল আউয়াল","রবিউস সানি","জমাদিউল আউয়াল","জমাদিউস সানি","রজব","শা'বান","রমজান","শাওয়াল","জিলকদ","জিলহজ"];
+const weekdays={Saturday:"শনিবার",Sunday:"রবিবার",Monday:"সোমবার",Tuesday:"মঙ্গলবার",Wednesday:"বুধবার",Thursday:"বৃহস্পতিবার",Friday:"শুক্রবার"};
+const months={January:"জানুয়ারি",February:"ফেব্রুয়ারি",March:"মার্চ",April:"এপ্রিল",May:"মে",June:"জুন",July:"জুলাই",August:"আগস্ট",September:"সেপ্টেম্বর",October:"অক্টোবর",November:"নভেম্বর",December:"ডিসেম্বর"};
+let mins=null;
+function fmt12(m){const h=Math.floor(m/60),mm=m%60;return `${bn(String(h%12||12).padStart(2,"0"))}:${bn(String(mm).padStart(2,"0"))} ${h>=12?"PM":"AM"}`}
+const dhakaFmt=new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Dhaka",hour:"2-digit",minute:"2-digit",second:"2-digit",hourCycle:"h23"});
+function dhakaNowSec(){const p=Object.fromEntries(dhakaFmt.formatToParts(new Date()).map(x=>[x.type,x.value]));return (+p.hour)*3600+(+p.minute)*60+(+p.second)}
+
+function tick(){
+  if(!mins)return;
+  const now=dhakaNowSec();
+  let idx=mins.findIndex(m=>m*60>now),target;
+  if(idx===-1){idx=0;target=mins[0]*60+86400}else target=mins[idx]*60;
+  const cur=(idx-1+5)%5, left=target-now;
+  const h=Math.floor(left/3600),m=Math.floor(left%3600/60),s=left%60;
+  $("nextName").textContent=prayers[idx][1];
+  $("nextCount").textContent=`${prayers[idx][1]} শুরু হতে ${h?bn(h)+" ঘণ্টা ":""}${bn(m)} মিনিট ${bn(s)} সেকেন্ড`;
+  document.querySelectorAll(".pt").forEach((e,i)=>e.classList.toggle("now",i===cur));
+}
+async function loadPrayer(){
+  const grid=$("prayerGrid");
+  try{
+    const r=await fetch("https://api.aladhan.com/v1/timingsByCity?city=Dhaka&country=Bangladesh&method=1&school=1");
+    if(!r.ok)throw 0;
+    const j=await r.json();if(j.code!==200)throw 0;
+    const t=j.data.timings;
+    mins=prayers.map(([k])=>{const [h,m]=t[k].match(/\d+/g).map(Number);return h*60+m});
+    grid.innerHTML="";
+    prayers.forEach(([k,n],i)=>{const d=document.createElement("div");d.className="pt";d.innerHTML=`<small>${n}</small><b>${fmt12(mins[i])}</b>`;grid.appendChild(d)});
+    const g=j.data.date.gregorian,h=j.data.date.hijri;
+    $("dateLine").textContent=`${weekdays[g.weekday.en]||g.weekday.en}, ${bn(g.day)} ${months[g.month.en]||g.month.en} ${bn(g.year)} খ্রিষ্টাব্দ (${bn(h.day)} ${hijriMonths[h.month.number-1]||""} ${bn(h.year)} হিজরি)`;
+    tick();setInterval(tick,1000);
+  }catch(e){
+    $("nextName").textContent="পাওয়া যায়নি";
+    $("nextCount").textContent="লাইভ সময়সূচি লোড হয়নি—ইন্টারনেট পরীক্ষা করুন";
+  }
+}
+
+/* ---------- দৈনিক দোয়া ---------- */
+const duas=[
+["দুনিয়া ও আখিরাতের কল্যাণ","رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ","হে আমাদের রব, দুনিয়া ও আখিরাতে কল্যাণ দিন এবং আগুনের শাস্তি থেকে রক্ষা করুন।","সূরা আল-বাকারা ২:২০১"],
+["বিপদে ইউনুস (আ.)-এর দোয়া","لَا إِلَٰهَ إِلَّا أَنتَ سُبْحَانَكَ إِنِّي كُنتُ مِنَ الظَّالِمِينَ","আপনি ছাড়া কোনো সত্য উপাস্য নেই; আপনি পবিত্র, নিশ্চয়ই আমি অন্যায়কারীদের অন্তর্ভুক্ত ছিলাম।","সূরা আল-আম্বিয়া ২১:৮৭"],
+["জ্ঞান বৃদ্ধির দোয়া","رَبِّ زِدْنِي عِلْمًا","হে আমার রব, আমার জ্ঞান বাড়িয়ে দিন।","সূরা ত্বহা ২০:১১৪"],
+["পিতা-মাতার জন্য দোয়া","رَبِّ ارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا","হে আমার রব, শৈশবে তাঁরা যেমন আমাকে লালন-পালন করেছেন, আপনিও তাঁদের প্রতি দয়া করুন।","সূরা বনি ইসরাইল ১৭:২৪"],
+["হেদায়াতের পর অন্তর বক্র না হওয়ার দোয়া","رَبَّنَا لَا تُزِغْ قُلُوبَنَا بَعْدَ إِذْ هَدَيْتَنَا وَهَبْ لَنَا مِن لَّدُنكَ رَحْمَةً","হে আমাদের রব, হেদায়াত দেওয়ার পর আমাদের অন্তর বাঁকা করবেন না এবং আপনার পক্ষ থেকে আমাদের রহমত দান করুন।","সূরা আলে ইমরান ৩:৮"],
+["আল্লাহর ওপর ভরসা","حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ","আল্লাহই আমাদের জন্য যথেষ্ট এবং তিনি কতই না উত্তম কার্যনির্বাহী।","সূরা আলে ইমরান ৩:১৭৩"],
+["ক্ষমা প্রার্থনা","اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي","হে আল্লাহ, আপনি ক্ষমাশীল, ক্ষমা করতে ভালোবাসেন; আমাকে ক্ষমা করুন।","জামে তিরমিযি"],
+["ঈমানে অবিচল থাকার দোয়া","يَا مُقَلِّبَ الْقُلُوبِ ثَبِّتْ قَلْبِي عَلَى دِينِكَ","হে অন্তর পরিবর্তনকারী, আমার অন্তরকে আপনার দ্বীনের ওপর অবিচল রাখুন।","জামে তিরমিযি"],
+["হেদায়াত ও তাকওয়ার দোয়া","اللَّهُمَّ إِنِّي أَسْأَلُكَ الْهُدَىٰ وَالتُّقَىٰ وَالْعَفَافَ وَالْغِنَىٰ","হে আল্লাহ, আপনার কাছে হেদায়াত, তাকওয়া, পবিত্রতা ও অমুখাপেক্ষিতা চাই।","সহিহ মুসলিম"],
+["আল্লাহর সাহায্য চাওয়ার জিকির","لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ","আল্লাহর সাহায্য ছাড়া কোনো শক্তি ও সামর্থ্য নেই।","সহিহ বুখারি ও মুসলিম"]
+];
+(function(){const d=duas[(new Date().getDate()-1)%duas.length];$("duaTitle").textContent=d[0];$("duaAr").textContent=d[1];$("duaBn").textContent="অর্থ: "+d[2];$("duaRef").textContent="সূত্র: "+d[3]})();
+
+/* ---------- তাসবীহ ---------- */
+let total=Math.max(0,Math.floor(Number(store.get("tasbeehTotal",0))||0));
+let mode=store.get("tasbeehMode","fatimi");
+$("mode").value=mode;
+const pad=n=>bn(String(n).padStart(2,"0"));
+function renderTasbeeh(){
+  $("total").textContent=pad(total);
+  let zikr="সুবহানাল্লাহ",count=total,goal=100,rounds=Math.floor(total/100);
+  if(mode==="fatimi"){
+    const p=total%100,r=total&&p===0;
+    const pos=r?100:p;
+    if(pos===0){zikr="সুবহানাল্লাহ";count=0;goal=33}
+    else if(pos<=33){zikr="সুবহানাল্লাহ";count=pos;goal=33}
+    else if(pos<=66){zikr="আলহামদুলিল্লাহ";count=pos-33;goal=33}
+    else{zikr="আল্লাহু আকবার";count=pos-66;goal=34}
+  }else{
+    const g=Number(mode);goal=g;rounds=Math.floor(total/g);
+    count=total%g;if(total&&count===0)count=g;
+    zikr="জিকির";
+  }
+  $("rounds").textContent=pad(rounds);
+  $("zikr").textContent=zikr;
+  $("sub").textContent=pad(count);
+  $("zprog").textContent=`${bn(count)} / ${bn(goal)}`;
+}
+function roundDone(){
+  if(mode==="fatimi")return total>0&&total%100===0;
+  return total>0&&total%Number(mode)===0;
+}
+$("tap").onclick=()=>{
+  total++;store.set("tasbeehTotal",total);renderTasbeeh();
+  const done=roundDone();
+  if(navigator.vibrate)navigator.vibrate(done?[80,40,80]:20);
+  $("tStatus").textContent=done?"মাশাআল্লাহ! একটি রাউন্ড সম্পূর্ণ হয়েছে।":"";
+};
+let resetArmed=false,resetTimer;
+$("reset").onclick=()=>{
+  const b=$("reset");
+  if(!resetArmed){resetArmed=true;b.innerHTML='<i class="fas fa-rotate-left"></i> নিশ্চিত? আবার চাপুন';clearTimeout(resetTimer);
+    resetTimer=setTimeout(()=>{resetArmed=false;b.innerHTML='<i class="fas fa-rotate-left"></i> রিস্টার্ট'},3000);return}
+  resetArmed=false;clearTimeout(resetTimer);b.innerHTML='<i class="fas fa-rotate-left"></i> রিস্টার্ট';
+  total=0;store.set("tasbeehTotal",0);renderTasbeeh();$("tStatus").textContent="গণনা রিসেট হয়েছে, মোট ০০।";
+};
+$("mode").onchange=e=>{mode=e.target.value;store.set("tasbeehMode",mode);total=0;store.set("tasbeehTotal",0);renderTasbeeh();$("tStatus").textContent="ধরন বদলানোয় গণনা শূন্য করা হয়েছে।"};
+
+/* ---------- শুরু ---------- */
+$("year").textContent=bn(new Date().getFullYear());
+loadSurah(cur);renderTasbeeh();loadPrayer();
+</script>
+</body>
+</html>
