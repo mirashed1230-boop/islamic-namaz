@@ -3,7 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ইসলামিক আলো ও নামাজ শিক্ষা</title>
+    <title>ইসলামিক আলো ও নামাজ শিক্ষা - ইসলামের আলো BD</title>
+    
+    <!-- SEO & Search Engine Optimization Tags for "ইসলামের আলো BD" -->
+    <meta name="description" content="ইসলামিক আলো ও নামাজ শিক্ষা (ইসলামের আলো BD) - পবিত্র কুরআন পাঠ, লাইভ নামাজের সময়সূচি, ১১৪ সূরা অডিও, নামাজ শিক্ষা এবং ডিজিটাল তাসবীহ পড়ার নির্ভরযোগ্য প্ল্যাটফর্ম। পরিচালনা ও ডিজাইনে: Md Rashed।">
+    <meta name="keywords" content="ইসলামের আলো BD, Islamer Alo BD, ইসলামিক আলো ও নামাজ শিক্ষা, Namaj Shikkha, Quran Sharif Bangla, Md Rashed, ডিজিটাল তাসবীহ">
+    <meta name="author" content="Md Rashed">
+    
+    <!-- Open Graph / Social Media Sharing Tags -->
+    <meta property="og:title" content="ইসলামিক আলো ও নামাজ শিক্ষা - ইসলামের আলো BD">
+    <meta property="og:description" content="পবিত্র কুরআন শরীফ, লাইভ নামাজের সময়সূচি, অডিও তিলাওয়াত ও ডিজিটাল তাসবীহ পড়ার ডিজিটাল প্ল্যাটফর্ম।">
+    <meta property="og:type" content="website">
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
@@ -173,7 +184,7 @@
             
             <div class="quran-book-box">
                 <div class="book-top-bar">
-                    <label style="color:#10b981; font-weight:bold; font-size:14px;"><i class="fas fa-list"></i> সূরা বেছে নিন (১ - ১‍১‍৪):</label>
+                    <label style="color:#10b981; font-weight:bold; font-size:14px;"><i class="fas fa-list"></i> সূরা বেছে নিন (১ - ১১৪):</label>
                     <select class="surah-dropdown" id="quranSelect" onchange="jumpToSurah(this.value)">
                         <!-- Generated via Script -->
                     </select>
@@ -430,7 +441,7 @@
             ];
 
             const today = new Date();
-            const dateNum = today.getDate(); // Gets current day of the month (1-31)
+            const dateNum = today.getDate();
             const duaIndex = (dateNum - 1) % dailyDuas.length;
             
             document.getElementById('dailyDuaTitle').innerText = dailyDuas[duaIndex].title;
