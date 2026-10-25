@@ -9,55 +9,49 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background: #051e11; color: #e2e8f0; min-height: 100vh; padding-bottom: 30px; }
 
-        /* Header Area */
         header { background: #020f08; border-bottom: 2px solid #10b981; padding: 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
         .logo { font-size: 24px; font-weight: bold; color: #10b981; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 5px; }
         .sub-logo { font-size: 13px; color: #94a3b8; }
 
-        /* Navigation Buttons */
         .nav-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; padding: 15px; background: #082b19; border-bottom: 1px solid rgba(16, 185, 129, 0.2); }
         .nav-btn { background: #0f3d24; color: #fbbf24; border: 1px solid #10b981; padding: 10px 14px; border-radius: 8px; font-size: 13px; font-weight: bold; cursor: pointer; text-decoration: none; transition: 0.3s; display: inline-flex; align-items: center; gap: 6px; }
         .nav-btn:hover, .nav-btn.active { background: #10b981; color: #020f08; }
 
         .container { max-width: 900px; margin: 20px auto; padding: 0 15px; }
-
-        /* Main Section Tab Content */
         .tab-section { display: none; }
-        .tab-section.active { display: block; animation: fadeIn 0.4s ease-in-out; }
+        .tab-section.active { display: block; animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Welcome Banner */
         .welcome-card { background: rgba(15, 61, 36, 0.6); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 25px; }
         .welcome-card h3 { color: #fbbf24; margin-bottom: 10px; font-size: 18px; }
         .welcome-card p { font-size: 14px; color: #cbd5e1; line-height: 1.6; }
 
         .section-title { font-size: 18px; color: #10b981; margin: 20px 0 15px 0; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid rgba(16, 185, 129, 0.2); padding-bottom: 8px; }
 
-        /* Custom Quran Book Reader (Page Turn Effect) */
-        .quran-book-container { background: #0a2e1b; border: 2px solid #10b981; border-radius: 15px; padding: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); }
-        .book-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; background: #051e11; padding: 12px; border-radius: 8px; border: 1px solid rgba(16, 185, 129, 0.3); }
-        .surah-select { padding: 8px; background: #020f08; border: 1px solid #10b981; color: #fbbf24; border-radius: 6px; font-weight: bold; outline: none; }
+        /* Book Flip Custom Reader Style */
+        .quran-book-box { background: #0a2e1b; border: 2px solid #10b981; border-radius: 15px; padding: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); }
+        .book-top-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; background: #051e11; padding: 12px; border-radius: 8px; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .surah-dropdown { padding: 8px; background: #020f08; border: 1px solid #10b981; color: #fbbf24; border-radius: 6px; font-weight: bold; outline: none; width: 100%; max-width: 300px; }
         
-        .book-page { background: #fffdf5; color: #1a202c; border-radius: 10px; padding: 25px; min-height: 380px; box-shadow: inset 0 0 15px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; position: relative; }
-        .page-title { text-align: center; font-size: 20px; color: #046c36; font-weight: bold; margin-bottom: 15px; border-bottom: 2px dashed #046c36; padding-bottom: 8px; }
-        .arabic-text { text-align: right; font-size: 24px; line-height: 2.3; color: #000; font-family: 'Amiri', 'Traditional Arabic', serif; margin-bottom: 20px; word-spacing: 2px; }
-        .bangla-text { text-align: left; font-size: 15px; line-height: 1.8; color: #2d3748; background: #f0fdf4; padding: 15px; border-radius: 8px; border-left: 4px solid #10b981; }
+        .book-sheet { background: #fffdf5; color: #1a202c; border-radius: 10px; padding: 30px; min-height: 400px; box-shadow: 0 5px 15px rgba(0,0,0,0.2), inset 0 0 20px rgba(0,0,0,0.05); border: 1px solid #d1d5db; position: relative; transition: transform 0.3s ease; }
+        .sheet-title { text-align: center; font-size: 22px; color: #065f46; font-weight: bold; margin-bottom: 20px; border-bottom: 2px solid #065f46; padding-bottom: 8px; }
+        .arabic-script { text-align: right; font-size: 26px; line-height: 2.5; color: #000; font-family: 'Traditional Arabic', 'Amiri', serif; margin-bottom: 20px; }
+        .bangla-meaning { text-align: left; font-size: 15px; line-height: 1.8; color: #1f2937; background: #f0fdf4; padding: 15px; border-radius: 8px; border-left: 5px solid #10b981; }
 
-        .book-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; }
-        .page-btn { background: #10b981; color: #020f08; border: none; padding: 10px 18px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 6px; }
-        .page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-        .page-indicator { color: #fbbf24; font-weight: bold; font-size: 14px; }
+        .book-navigation { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; }
+        .turn-btn { background: #fbbf24; color: #020f08; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 8px; font-size: 14px; }
+        .turn-btn:hover { background: #f59e0b; }
+        .turn-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+        .page-counter { color: #fbbf24; font-weight: bold; font-size: 15px; }
 
-        /* Digital Tasbeeh */
+        /* Tasbeeh */
         .tasbeeh-box { background: #0a2e1b; border: 1px solid #10b981; border-radius: 12px; padding: 25px; text-align: center; max-width: 400px; margin: 0 auto; }
         .tasbeeh-count { font-size: 48px; color: #fbbf24; font-weight: bold; margin: 15px 0; background: #020f08; padding: 10px; border-radius: 10px; border: 1px solid #10b981; }
         .tasbeeh-btn { background: #10b981; color: #020f08; border: none; padding: 15px 30px; font-size: 18px; font-weight: bold; border-radius: 50px; cursor: pointer; margin-right: 10px; }
         .reset-btn { background: #ef4444; color: #fff; border: none; padding: 15px 20px; font-size: 16px; font-weight: bold; border-radius: 50px; cursor: pointer; }
 
-        /* Grid Services */
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
-        .service-card { background: #0a2e1b; border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 10px; padding: 18px; text-align: center; transition: 0.3s; }
+        .service-card { background: #0a2e1b; border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 10px; padding: 18px; text-align: center; transition: 0.3s; cursor: pointer; }
         .service-card:hover { border-color: #10b981; transform: translateY(-3px); }
         .service-icon { font-size: 28px; color: #fbbf24; margin-bottom: 8px; }
         .service-title { font-size: 15px; font-weight: bold; color: #f8fafc; margin-bottom: 5px; }
@@ -67,13 +61,11 @@
 </head>
 <body>
 
-    <!-- Header Area -->
     <header>
         <div class="logo"><i class="fas fa-mosque"></i> ইসলামিক আলো ও নামাজ শিক্ষা</div>
         <div class="sub-logo">Md Rashed এর সৌজন্যে একটি ডিজিটাল ইসলামিক প্ল্যাটফর্ম</div>
     </header>
 
-    <!-- Navigation Bar -->
     <div class="nav-buttons">
         <button class="nav-btn active" onclick="switchTab('home')"><i class="fas fa-home"></i> হোম</button>
         <button class="nav-btn" onclick="switchTab('quran-read')"><i class="fas fa-book-quran"></i> সম্পূর্ণ কোরআন পাঠ</button>
@@ -84,26 +76,26 @@
 
     <div class="container">
 
-        <!-- 1. HOME TAB -->
+        <!-- HOME -->
         <div id="homeTab" class="tab-section active">
             <div class="welcome-card">
                 <h3>স্বাগতম</h3>
-                <p>আসসালামু আলাইকুম! "ইসলামিক আলো ও নামাজ শিক্ষা" ওয়েবসাইটে আপনাকে স্বাগতম। এখান থেকে আপনি বইয়ের মতো উল্টে সম্পূর্ণ কোরআন পাঠ, সঠিক সালাত শিক্ষা, ১১৪টি সূরার অডিও এবং ডিজিটাল তাসবীহ সুবিধাসমূহ সহজে ব্যবহার করতে পারবেন।</p>
+                <p>আসসালামু আলাইকুম! "ইসলামিক আলো ও নামাজ শিক্ষা" ওয়েবসাইটে আপনাকে স্বাগতম। এখান থেকে আপনি বইয়ের পাতার মতো পৃষ্ঠা উল্টে সম্পূর্ণ কোরআন পাঠ, সঠিক সালাত শিক্ষা এবং তাসবীহ পড়তে পারবেন।</p>
             </div>
 
             <div class="section-title"><i class="fas fa-cubes"></i> ইসলামিক সেবাসমূহ</div>
             <div class="grid-container">
-                <div class="service-card" onclick="switchTab('quran-read')" style="cursor:pointer;">
-                    <div class="service-icon"><i class="fas fa-quran"></i></div>
+                <div class="service-card" onclick="switchTab('quran-read')">
+                    <div class="service-icon"><i class="fas fa-book-open"></i></div>
                     <div class="service-title">সম্পূর্ণ কোরআন পাঠ</div>
                     <p style="font-size:12px; color:#94a3b8;">বইয়ের পাতা উল্টে কোরআন পড়ুন</p>
                 </div>
-                <div class="service-card" onclick="switchTab('namaz')" style="cursor:pointer;">
+                <div class="service-card" onclick="switchTab('namaz')">
                     <div class="service-icon"><i class="fas fa-pray"></i></div>
                     <div class="service-title">নামাজ শিক্ষা</div>
                     <p style="font-size:12px; color:#94a3b8;">সহিহ নিয়মে সালাত আদায়</p>
                 </div>
-                <div class="service-card" onclick="switchTab('tasbeeh')" style="cursor:pointer;">
+                <div class="service-card" onclick="switchTab('tasbeeh')">
                     <div class="service-icon"><i class="fas fa-fingerprint"></i></div>
                     <div class="service-title">ডিজিটাল তাসবীহ</div>
                     <p style="font-size:12px; color:#94a3b8;">মোবাইলে সহজে জিকির করুন</p>
@@ -111,43 +103,43 @@
             </div>
         </div>
 
-        <!-- 2. FULL QURAN READ TAB (BOOK FLIP STYLE) -->
+        <!-- QURAN BOOK FLIP READER -->
         <div id="quranReadTab" class="tab-section">
-            <div class="section-title"><i class="fas fa-book-open"></i> আল-কোরআন আল-কারীম (বইয়ের মতো পৃষ্ঠা উল্টে পড়ুন)</div>
+            <div class="section-title"><i class="fas fa-book-reader"></i> পবিত্র কুরআন শরীফ (বইয়ের পাতার মতো উল্টে পড়ুন)</div>
             
-            <div class="quran-book-container">
-                <div class="book-header">
-                    <label style="color:#10b981; font-weight:bold;">সূরা নির্বাচন করুন:</label>
-                    <select class="surah-select" id="surahSelect" onchange="jumpToSurah(this.value)">
-                        <!-- Dynamic Surah List -->
+            <div class="quran-book-box">
+                <div class="book-top-bar">
+                    <label style="color:#10b981; font-weight:bold; font-size:14px;"><i class="fas fa-list"></i> সরাসরি সূরা বা পৃষ্ঠা বেছে নিন:</label>
+                    <select class="surah-dropdown" id="quranSelect" onchange="jumpToPage(this.value)">
+                        <!-- Options generated by script -->
                     </select>
                 </div>
 
-                <!-- Flip Book Page Display -->
-                <div class="book-page">
-                    <div class="page-title" id="pageTitle">সূরা আল-ফাতিহা</div>
-                    <div class="arabic-text" id="arabicPage">
-                        بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ ۝ ١ ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَـٰلَمِينَ ۝ ٢ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ ۝ ٣ مَـٰلِكِ يَوْمِ ٱلدِّينِ ۝ ٤ إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ ۝ ٥ ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ ۝ ٦ صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ ۝ ٧
+                <!-- Book Sheet UI -->
+                <div class="book-sheet" id="bookSheet">
+                    <div class="sheet-title" id="bookTitle">১. সূরা আল-ফাতিহা</div>
+                    <div class="arabic-script" id="bookArabic">
+                        بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ ۝ ١ ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَـٰلَمِينَ ۝ ٢ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ ۝ ٣ مَـٰلِكِ يَوْمِ ٱلدِّينِ ۝ ٤ إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ ۝ ٥ ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ ۝ ٦ صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ ۝ ৭
                     </div>
-                    <div class="bangla-text" id="banglaPage">
-                        <strong>অর্থ:</strong> ১. পরম করুণাময় অসীম দয়ালু আল্লাহর নামে। ২. সমস্ত প্রশংসা বিশ্বজগতের প্রতিপালক আল্লাহর জন্য। ৩. যিনি পরম করুণাময় ও অসীম দয়ালু। ৪. বিচার দিনের মালিক। ৫. আমরা কেবল তোমারই ইবাদত করি এবং কেবল তোমারই সাহায্য চাই। ৬. আমাদের সরল-সঠিক পথ প্রদর্শন করো। ৭. তাদের পথ, যাদের তুমি অনুগ্রহ করেছো।
+                    <div class="bangla-meaning" id="bookBangla">
+                        <strong>অনুবাদ:</strong> ১. পরম করুণাময় অসীম দয়ালু আল্লাহর নামে। ২. সমস্ত প্রশংসা বিশ্বজগতের প্রতিপালক আল্লাহর জন্য। ৩. যিনি পরম করুণাময় ও অসীম দয়ালু। ৪. বিচার দিনের মালিক। ৫. আমরা কেবল তোমারই ইবাদত করি এবং কেবল তোমারই সাহায্য চাই। ৬. আমাদের সরল-সঠিক পথ প্রদর্শন করো। ৭. তাদের পথ, যাদের তুমি অনুগ্রহ করেছো।
                     </div>
                 </div>
 
-                <!-- Page Controls -->
-                <div class="book-controls">
-                    <button class="page-btn" id="prevBtn" onclick="changePage(-1)"><i class="fas fa-arrow-left"></i> পূর্ববর্তী পৃষ্ঠা</button>
-                    <span class="page-indicator" id="pageNumber">পৃষ্ঠা ১ / ১১৪</span>
-                    <button class="page-btn" id="nextBtn" onclick="changePage(1)">পরবর্তী পৃষ্ঠা <i class="fas fa-arrow-right"></i></button>
+                <!-- Turn Page Controls -->
+                <div class="book-navigation">
+                    <button class="turn-btn" id="prevPageBtn" onclick="turnPage(-1)"><i class="fas fa-angle-right"></i> পূর্ববর্তী পৃষ্ঠা</button>
+                    <span class="page-counter" id="pageIndicator">পৃষ্ঠা ১ / ৪</span>
+                    <button class="turn-btn" id="nextPageBtn" onclick="turnPage(1)">পরবর্তী পৃষ্ঠা <i class="fas fa-angle-left"></i></button>
                 </div>
             </div>
         </div>
 
-        <!-- 3. NAMAZ TAB -->
+        <!-- NAMAZ -->
         <div id="namazTab" class="tab-section">
-            <div class="section-title"><i class="fas fa-pray"></i> নামাজ শিক্ষা ও সঠিক নিয়ম</div>
+            <div class="section-title"><i class="fas fa-pray"></i> নামাজ শিক্ষা</div>
             <div class="welcome-card" style="text-align:left;">
-                <h4 style="color:#fbbf24; margin-bottom:10px;">পাঁচ ওয়াক্ত নামাজের নিয়ত ও রাকাত:</h4>
+                <h4 style="color:#fbbf24; margin-bottom:10px;">পাঁচ ওয়াক্ত নামাজের সংক্ষিপ্ত নিয়ম:</h4>
                 <p>• <strong>ফজর:</strong> ২ রাকাত সুন্নাত, ২ রাকাত ফরজ।</p>
                 <p>• <strong>যোহর:</strong> ৪ রাকাত সুন্নাত, ৪ রাকাত ফরজ, ২ রাকাত সুন্নাত, ২ রাকাত নফল।</p>
                 <p>• <strong>আসর:</strong> ৪ রাকাত ফরজ।</p>
@@ -156,22 +148,22 @@
             </div>
         </div>
 
-        <!-- 4. AUDIO SURAH TAB -->
+        <!-- AUDIO -->
         <div id="audioTab" class="tab-section">
-            <div class="section-title"><i class="fas fa-volume-up"></i> ১১৪ সূরা অডিও টিলাওয়াত</div>
+            <div class="section-title"><i class="fas fa-volume-up"></i> ১১৪ সূরা অডিও</div>
             <div class="welcome-card">
-                <p>এখানে আল-কোরআনের ১১৪টি সূরার অডিও তিলাওয়াত শোনার ব্যবস্থা থাকবে।</p>
+                <p>এখানে আল-কোরআনের ১১৪টি সূরার অডিও তিলাওয়াত শোনার সেকশন রয়েছে।</p>
             </div>
         </div>
 
-        <!-- 5. TASBEEH TAB -->
+        <!-- TASBEEH -->
         <div id="tasbeehTab" class="tab-section">
-            <div class="section-title"><i class="fas fa-fingerprint"></i> ডিজিটাল তাসবীহ গণনাকারী</div>
+            <div class="section-title"><i class="fas fa-fingerprint"></i> ডিজিটাল তাসবীহ</div>
             <div class="tasbeeh-box">
                 <p style="color:#94a3b8;">সুবহানাল্লাহ / আলহামদুলিল্লাহ / আল্লাহু আকবার</p>
                 <div class="tasbeeh-count" id="countDisplay">০</div>
-                <button class="tasbeeh-btn" onclick="addCount()"><i class="fas fa-plus"></i> গণনা করুন</button>
-                <button class="reset-btn" onclick="resetCount()"><i class="fas fa-redo"></i> রিসেট</button>
+                <button class="tasbeeh-btn" onclick="addCount()"><i class="fas fa-plus"></i> গণনা</button>
+                <button class="reset-btn" onclick="resetCount()"><i class="fas fa-redo"></i> রিস্টার্ট</button>
             </div>
         </div>
 
@@ -181,94 +173,97 @@
 
     </div>
 
-    <!-- JavaScript Logic -->
     <script>
-        // Tab Switch Logic
+        // Navigation Switcher
         function switchTab(tabName) {
-            const tabs = document.querySelectorAll('.tab-section');
-            const btns = document.querySelectorAll('.nav-btn');
-            
-            tabs.forEach(tab => tab.classList.remove('active'));
-            btns.forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-section').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
 
             if(tabName === 'home') {
                 document.getElementById('homeTab').classList.add('active');
-                btns[0].classList.add('active');
+                document.querySelectorAll('.nav-btn')[0].classList.add('active');
             } else if(tabName === 'quran-read') {
                 document.getElementById('quranReadTab').classList.add('active');
-                btns[1].classList.add('active');
+                document.querySelectorAll('.nav-btn')[1].classList.add('active');
             } else if(tabName === 'namaz') {
                 document.getElementById('namazTab').classList.add('active');
-                btns[2].classList.add('active');
+                document.querySelectorAll('.nav-btn')[2].classList.add('active');
             } else if(tabName === 'audio') {
                 document.getElementById('audioTab').classList.add('active');
-                btns[3].classList.add('active');
+                document.querySelectorAll('.nav-btn')[3].classList.add('active');
             } else if(tabName === 'tasbeeh') {
                 document.getElementById('tasbeehTab').classList.add('active');
-                btns[4].classList.add('active');
+                document.querySelectorAll('.nav-btn')[4].classList.add('active');
             }
         }
 
-        // Quran Book Data & Flip Logic
-        const quranPages = [
+        // Quran Pages Data (Book Flip Style)
+        const quranBookPages = [
             {
-                surah: "১. সূরা আল-ফাতিহা",
-                arabic: "بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ ۝ ١ ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَـٰلَمِينَ ۝ ٢ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ ۝ ٣ مَـٰلِكِ يَوْمِ ٱلدِّينِ ۝ ٤ إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ ۝ ٥ ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ ۝ ٦ صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ ۝ ٧",
-                bangla: "<strong>অর্থ:</strong> ১. পরম করুণাময় অসীম দয়ালু আল্লাহর নামে। ২. সমস্ত প্রশংসা বিশ্বজগতের প্রতিপালক আল্লাহর জন্য। ৩. যিনি পরম করুণাময় ও অসীম দয়ালু। ৪. বিচার দিনের মালিক। ৫. আমরা কেবল তোমারই ইবাদত করি এবং কেবল তোমারই সাহায্য চাই। ৬. আমাদের সরল-সঠিক পথ প্রদর্শন করো। ৭. তাদের পথ, যাদের তুমি অনুগ্রহ করেছো।"
+                title: "১. সূরা আল-ফাতিহা",
+                arabic: "بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ ۝ ١ ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَـٰلَمِينَ ۝ ٢ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ ۝ ٣ مَـٰلِكِ يَوْمِ ٱلدِّينِ ۝ ٤ إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ ۝ ٥ ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ ۝ ٦ صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ ۝ ৭",
+                bangla: "<strong>অনুবাদ:</strong> ১. পরম করুণাময় অসীম দয়ালু আল্লাহর নামে। ২. সমস্ত প্রশংসা বিশ্বজগতের প্রতিপালক আল্লাহর জন্য। ৩. যিনি পরম করুণাময় ও অসীম দয়ালু। ৪. বিচার দিনের মালিক। ৫. আমরা কেবল তোমারই ইবাদত করি এবং কেবল তোমারই সাহায্য চাই। ৬. আমাদের সরল-সঠিক পথ প্রদর্শন করো। ৭. তাদের পথ, যাদের তুমি অনুগ্রহ করেছো।"
             },
             {
-                surah: "১১২. সূরা আল-ইখলাস",
+                title: "১১২. সূরা আল-ইখলাস",
                 arabic: "قُلْ هُوَ اللَّهُ أَحَدٌ ۝ ١ اللَّهُ الصَّمَدُ ۝ ٢ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ ٣ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ ۝ ٤",
-                bangla: "<strong>অর্থ:</strong> ১. বলো, তিনি আল্লাহ, এক-অদ্বিতীয়। ২. আল্লাহ কারো মুখাপেক্ষী নন, সকলেই তাঁর মুখাপেক্ষী। ৩. তিনি কাউকে জন্ম দেননি এবং তাঁকেও জন্ম দেওয়া হয়নি। ৪. এবং তাঁর সমতুল্য কেউই নেই।"
+                bangla: "<strong>অনুবাদ:</strong> ১. বলো, তিনি আল্লাহ, এক-অদ্বিতীয়। ২. আল্লাহ কারো মুখাপেক্ষী নন, সকলেই তাঁর মুখাপেক্ষী। ৩. তিনি কাউকে জন্ম দেননি এবং তাঁকেও জন্ম দেওয়া হয়নি। ৪. এবং তাঁর সমতুল্য কেউই নেই।"
             },
             {
-                surah: "১১৩. সূরা আল-ফালাক",
+                title: "১১৩. সূরা আল-ফালাক",
                 arabic: "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ۝ ١ مِن شَرِّ مَا خَلَقَ ۝ ٢ وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ ۝ ٣ وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ۝ ٤ وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ ۝ ٥",
-                bangla: "<strong>অর্থ:</strong> ১. বলো, আমি আশ্রয় চাচ্ছি ভোরের রবের। ২. তিনি যা সৃষ্টি করেছেন তার অনিষ্ট হতে। ৩. আর অনিষ্ট হতে আঁধার রাতের, যখন তা গভীর হয়। ৪. আর অনিষ্ট হতে গিট্রে ফুঁৎকারকারিণীদের। ৫. আর অনিষ্ট হতে হিংসুকের, যখন সে হিংসা করে।"
+                bangla: "<strong>অনুবাদ:</strong> ১. বলো, আমি আশ্রয় চাচ্ছি ভোরের রবের। ২. তিনি যা সৃষ্টি করেছেন তার অনিষ্ট হতে। ৩. আর অনিষ্ট হতে আঁধার রাতের, যখন তা গভীর হয়। ৪. আর অনিষ্ট হতে গিট্রে ফুঁৎকারকারিণীদের। ৫. আর অনিষ্ট হতে হিংসুকের, যখন সে হিংসা করে।"
             },
             {
-                surah: "১১৪. সূরা আন-নাস",
+                title: "১১৪. সূরা আন-নাস",
                 arabic: "قُلْ أَعُوذُ بِرَبِّ النَّاسِ ۝ ١ مَلِكِ النَّاسِ ۝ ٢ إِلَٰهِ النَّاسِ ۝ ٣ مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ۝ ٤ الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ ۝ ٥ مِنَ الْجِنَّةِ وَالنَّاسِ ۝ ٦",
-                bangla: "<strong>অর্থ:</strong> ১. বলো, আমি আশ্রয় চাচ্ছি মানুষের রবের। ২. মানুষের মালিকের। ৩. মানুষের মাবুদের। ৪. আত্মগোপনকারী কুমন্ত্রণাদাতার অনিষ্ট হতে। ৫. যে মানুষকে কুমন্ত্রণা দেয় মানুষের অন্তরে। ৬. জিন ও মানুষের মধ্য হতে।"
+                bangla: "<strong>অনুবাদ:</strong> ১. বলো, আমি আশ্রয় চাচ্ছি মানুষের রবের। ২. মানুষের মালিকের। ৩. মানুষের মাবুদের। ৪. আত্মগোপনকারী কুমন্ত্রণাদাতার অনিষ্ট হতে। ৫. যে মানুষকে কুমন্ত্রণা দেয় মানুষের অন্তরে। ৬. জিন ও মানুষের মধ্য হতে।"
             }
         ];
 
-        let currentPageIndex = 0;
+        let currentBookPage = 0;
 
-        // Load Surah Dropdown Options
-        const selectElem = document.getElementById('surahSelect');
-        quranPages.forEach((item, index) => {
+        // Populate Dropdown
+        const dropdown = document.getElementById('quranSelect');
+        quranBookPages.forEach((page, idx) => {
             let opt = document.createElement('option');
-            opt.value = index;
-            opt.innerHTML = item.surah;
-            selectElem.appendChild(opt);
+            opt.value = idx;
+            opt.innerHTML = page.title;
+            dropdown.appendChild(opt);
         });
 
-        function renderPage() {
-            const data = quranPages[currentPageIndex];
-            document.getElementById('pageTitle').innerText = data.surah;
-            document.getElementById('arabicPage').innerHTML = data.arabic;
-            document.getElementById('banglaPage').innerHTML = data.bangla;
-            document.getElementById('pageNumber').innerText = `পৃষ্ঠা ${currentPageIndex + 1} / ${quranPages.length}`;
-            document.getElementById('surahSelect').value = currentPageIndex;
+        function updateBookView() {
+            const data = quranBookPages[currentBookPage];
+            const sheet = document.getElementById('bookSheet');
+            
+            // Flip Animation effect
+            sheet.style.transform = "scale(0.98)";
+            setTimeout(() => {
+                document.getElementById('bookTitle').innerText = data.title;
+                document.getElementById('bookArabic').innerHTML = data.arabic;
+                document.getElementById('bookBangla').innerHTML = data.bangla;
+                document.getElementById('pageIndicator').innerText = `পৃষ্ঠা ${currentBookPage + 1} / ${quranBookPages.length}`;
+                dropdown.value = currentBookPage;
+                sheet.style.transform = "scale(1)";
+            }, 150);
 
-            document.getElementById('prevBtn').disabled = (currentPageIndex === 0);
-            document.getElementById('nextBtn').disabled = (currentPageIndex === quranPages.length - 1);
+            document.getElementById('prevPageBtn').disabled = (currentBookPage === 0);
+            document.getElementById('nextPageBtn').disabled = (currentBookPage === quranBookPages.length - 1);
         }
 
-        function changePage(step) {
-            currentPageIndex += step;
-            if(currentPageIndex < 0) currentPageIndex = 0;
-            if(currentPageIndex >= quranPages.length) currentPageIndex = quranPages.length - 1;
-            renderPage();
+        function turnPage(direction) {
+            currentBookPage += direction;
+            if(currentBookPage < 0) currentBookPage = 0;
+            if(currentBookPage >= quranBookPages.length) currentBookPage = quranBookPages.length - 1;
+            updateBookView();
         }
 
-        function jumpToSurah(index) {
-            currentPageIndex = parseInt(index);
-            renderPage();
+        function jumpToPage(index) {
+            currentBookPage = parseInt(index);
+            updateBookView();
         }
 
-        // Tasbeeh Logic
+        // Tasbeeh
         let count = 0;
         function addCount() {
             count++;
@@ -279,8 +274,7 @@
             document.getElementById('countDisplay').innerText = '০';
         }
 
-        // Initialize First Page
-        renderPage();
+        updateBookView();
     </script>
 </body>
 </html>
