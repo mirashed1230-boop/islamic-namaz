@@ -122,26 +122,8 @@ nav{position:fixed;top:auto;bottom:0;left:0;right:0;padding:6px;gap:4px;border-t
     <div class="big" id="nextName">লোড হচ্ছে...</div>
     <div id="nextCount" class="date">--</div>
     <div class="date" id="dateLine" style="margin-top:8px"></div>
-    
-    <!-- 👇 জেলা সিলেক্টর ও কিবলা -->
-    <div class="bar" style="margin-top:12px;justify-content:center;flex-wrap:wrap">
-      <select id="districtSelect" aria-label="জেলা নির্বাচন" style="max-width:280px">
-        <option value="dhaka" data-lat="23.7576" data-lng="90.3879" data-offset="0">ঢাকা</option>
-        <option value="chittagong" data-lat="22.3569" data-lng="91.7832" data-offset="-5">চট্টগ্রাম</option>
-        <option value="sylhet" data-lat="24.9046" data-lng="91.8687" data-offset="-6">সিলেট</option>
-        <option value="khulna" data-lat="22.8456" data-lng="89.5403" data-offset="3">খুলনা</option>
-        <option value="rajshahi" data-lat="24.3745" data-lng="88.6043" data-offset="7">রাজশাহী</option>
-        <option value="rangpur" data-lat="25.7467" data-lng="89.2427" data-offset="8">রংপুর</option>
-        <option value="barisal" data-lat="22.7924" data-lng="90.3620" data-offset="1">বরিশাল</option>
-      </select>
-    </div>
-    <div id="qiblaDisplay" class="info" style="margin-top:10px;justify-content:center;gap:8px">
-      🧭 কিবলা দিক: <span id="qiblaValue">১১৬.৪°</span> (দক্ষিণ-পূর্ব) — ঢাকা
-    </div>
-    <!-- 👋 নতুন অংশ শেষ -->
-    
-    <div class="grid5" id="prayerGrid" style="margin-top:16px"></div>
-    <p class="ref" style="margin-top:10px">কারাচি বিশ্ববিদ্যালয় পদ্ধতি, আসর হানাফি মতে। স্থানভেদে সামান্য পার্থক্য হতে পারে।</p>
+    <div class="grid5" id="prayerGrid"></div>
+    <p class="ref" style="margin-top:10px">ঢাকার সময়, কারাচি বিশ্ববিদ্যালয় পদ্ধতি, আসর হানাফি মতে। স্থানভেদে সামান্য পার্থক্য হতে পারে।</p>
   </div>
 
   <h2 class="title"><i class="fas fa-cubes"></i> ইসলামিক সেবাসমূহ</h2>
@@ -191,7 +173,7 @@ nav{position:fixed;top:auto;bottom:0;left:0;right:0;padding:6px;gap:4px;border-t
   <div class="card center">
     <p class="gold">সূরা নির্বাচন করুন (শেষ হলে পরেরটি নিজে চলবে)</p><br>
     <select id="audioSelect" aria-label="অডিওর জন্য সূরা"></select><br>
-    <audio id="player" controls preload="none">
+    <audio id="player" controls preload="none"></audio>
     <p class="status" id="aStatus" role="status"></p>
   </div>
 </section>
@@ -272,46 +254,6 @@ function switchTab(t){
 }
 document.querySelectorAll(".nav-btn").forEach(b=>b.onclick=()=>switchTab(b.dataset.tab));
 document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>switchTab(b.dataset.go));
-
-/* ---------- জেলা ও কিবলা ---------- */
-const MAKKAH_LAT = 21.4225;
-const MAKKAH_LNG = 39.8262;
-window.timeOffset = 0;
-
-const toRad = deg => deg * Math.PI / 180;
-const toDeg = rad => rad * 180 / Math.PI;
-
-function getQiblaDirection(userLat, userLng) {
-  const φ1 = toRad(userLat);
-  const φ2 = toRad(MAKKAH_LAT);
-  const Δλ = toRad(MAKKAH_LNG - userLng);
-  const y = Math.sin(Δλ) * Math.cos(φ2);
-  const x = Math.cos(φ1) * Math.sin(φ2) - 
-            Math.sin(φ1) * Math.cos(φ2) * Math.cos(Δλ);
-  let qibla = toDeg(Math.atan2(y, x));
-  return (qibla + 360) % 360;
-}
-
-function getDirectionName(deg) {
-  if (deg >= 105 && deg < 125) return "দক্ষিণ-পূর্ব";
-  if (deg >= 95 && deg < 105) return "পূর্ব-দক্ষিণ";
-  if (deg >= 125 && deg < 145) return "দক্ষিণ-পূর্ব";
-  return `${bn(Math.round(deg))}°`;
-}
-
-function updateQiblaAndTimes() {
-  const sel = $("districtSelect");
-  const opt = sel.options[sel.selectedIndex];
-  const lat = parseFloat(opt.dataset.lat);
-  const lng = parseFloat(opt.dataset.lng);
-  const offset = parseInt(opt.dataset.offset);
-  
-  const qibla = getQiblaDirection(lat, lng);
-  $("qiblaDisplay").innerHTML = `🧭 কিবলা দিক: <span id="qiblaValue">${bn(qibla.toFixed(1))}°</span> (${getDirectionName(qibla)}) — ${opt.textContent}`;
-  window.timeOffset = offset;
-}
-
-document.getElementById("districtSelect").addEventListener("change", updateQiblaAndTimes);
 
 /* ---------- কুরআন ---------- */
 let cur=Math.min(114,Math.max(1,Number(store.get("lastSurah",1))||1));
@@ -401,43 +343,21 @@ const hijriMonths=["মুহাররম","সফর","রবিউল আউ�
 const weekdays={Saturday:"শনিবার",Sunday:"রবিবার",Monday:"সোমবার",Tuesday:"মঙ্গলবার",Wednesday:"বুধবার",Thursday:"বৃহস্পতিবার",Friday:"শুক্রবার"};
 const months={January:"জানুয়ারি",February:"ফেব্রুয়ারি",March:"মার্চ",April:"এপ্রিল",May:"মে",June:"জুন",July:"জুলাই",August:"আগস্ট",September:"সেপ্টেম্বর",October:"অক্টোবর",November:"নভেম্বর",December:"ডিসেম্বর"};
 let mins=null;
-
-function fmt12(m){
-  const offset = window.timeOffset || 0;
-  m = m + offset;
-  if (m < 0) m += 1440;
-  if (m >= 1440) m -= 1440;
-  const h=Math.floor(m/60),mm=m%60;
-  return `${bn(String(h%12||12).padStart(2,"0"))}:${bn(String(mm).padStart(2,"0"))} ${h>=12?"PM":"AM"}`
-}
-
+function fmt12(m){const h=Math.floor(m/60),mm=m%60;return `${bn(String(h%12||12).padStart(2,"0"))}:${bn(String(mm).padStart(2,"0"))} ${h>=12?"PM":"AM"}`}
 const dhakaFmt=new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Dhaka",hour:"2-digit",minute:"2-digit",second:"2-digit",hourCycle:"h23"});
 function dhakaNowSec(){const p=Object.fromEntries(dhakaFmt.formatToParts(new Date()).map(x=>[x.type,x.value]));return (+p.hour)*3600+(+p.minute)*60+(+p.second)}
 
 function tick(){
   if(!mins)return;
   const now=dhakaNowSec();
-  let idx=mins.findIndex(m=>{
-    let adj = m + (window.timeOffset || 0)*60;
-    if (adj < 0) adj += 1440;
-    if (adj >= 1440) adj -= 1440;
-    return adj*60 > now;
-  });
-  let adjMins = mins.map(m => {
-    let adj = m + (window.timeOffset || 0);
-    if (adj < 0) adj += 1440;
-    if (adj >= 1440) adj -= 1440;
-    return adj;
-  });
-  if(idx===-1){idx=0;adjMins[idx]+=86400/60}
-  let target = adjMins[idx]*60;
+  let idx=mins.findIndex(m=>m*60>now),target;
+  if(idx===-1){idx=0;target=mins[0]*60+86400}else target=mins[idx]*60;
   const cur=(idx-1+5)%5, left=target-now;
   const h=Math.floor(left/3600),m=Math.floor(left%3600/60),s=left%60;
   $("nextName").textContent=prayers[idx][1];
   $("nextCount").textContent=`${prayers[idx][1]} শুরু হতে ${h?bn(h)+" ঘণ্টা ":""}${bn(m)} মিনিট ${bn(s)} সেকেন্ড`;
   document.querySelectorAll(".pt").forEach((e,i)=>e.classList.toggle("now",i===cur));
 }
-
 async function loadPrayer(){
   const grid=$("prayerGrid");
   try{
@@ -451,7 +371,6 @@ async function loadPrayer(){
     const g=j.data.date.gregorian,h=j.data.date.hijri;
     $("dateLine").textContent=`${weekdays[g.weekday.en]||g.weekday.en}, ${bn(g.day)} ${months[g.month.en]||g.month.en} ${bn(g.year)} খ্রিষ্টাব্দ (${bn(h.day)} ${hijriMonths[h.month.number-1]||""} ${bn(h.year)} হিজরি)`;
     tick();setInterval(tick,1000);
-    updateQiblaAndTimes();
   }catch(e){
     $("nextName").textContent="পাওয়া যায়নি";
     $("nextCount").textContent="লাইভ সময়সূচি লোড হয়নি—ইন্টারনেট পরীক্ষা করুন";
@@ -464,4 +383,63 @@ const duas=[
 ["বিপদে ইউনুস (আ.)-এর দোয়া","لَا إِلَٰهَ إِلَّا أَنتَ سُبْحَانَكَ إِنِّي كُنتُ مِنَ الظَّالِمِينَ","আপনি ছাড়া কোনো সত্য উপাস্য নেই; আপনি পবিত্র, নিশ্চয়ই আমি অন্যায়কারীদের অন্তর্ভুক্ত ছিলাম।","সূরা আল-আম্বিয়া ২১:৮৭"],
 ["জ্ঞান বৃদ্ধির দোয়া","رَبِّ زِدْنِي عِلْمًا","হে আমার রব, আমার জ্ঞান বাড়িয়ে দিন।","সূরা ত্বহা ২০:১১৪"],
 ["পিতা-মাতার জন্য দোয়া","رَبِّ ارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا","হে আমার রব, শৈশবে তাঁরা যেমন আমাকে লালন-পালন করেছেন, আপনিও তাঁদের প্রতি দয়া করুন।","সূরা বনি ইসরাইল ১৭:২৪"],
-["হেদায়াতের পর অন্তর
+["হেদায়াতের পর অন্তর বক্র না হওয়ার দোয়া","رَبَّنَا لَا تُزِغْ قُلُوبَنَا بَعْدَ إِذْ هَدَيْتَنَا وَهَبْ لَنَا مِن لَّدُنكَ رَحْمَةً","হে আমাদের রব, হেদায়াত দেওয়ার পর আমাদের অন্তর বাঁকা করবেন না এবং আপনার পক্ষ থেকে আমাদের রহমত দান করুন।","সূরা আলে ইমরান ৩:৮"],
+["আল্লাহর ওপর ভরসা","حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ","আল্লাহই আমাদের জন্য যথেষ্ট এবং তিনি কতই না উত্তম কার্যনির্বাহী।","সূরা আলে ইমরান ৩:১৭৩"],
+["ক্ষমা প্রার্থনা","اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي","হে আল্লাহ, আপনি ক্ষমাশীল, ক্ষমা করতে ভালোবাসেন; আমাকে ক্ষমা করুন।","জামে তিরমিযি"],
+["ঈমানে অবিচল থাকার দোয়া","يَا مُقَلِّبَ الْقُلُوبِ ثَبِّتْ قَلْبِي عَلَى دِينِكَ","হে অন্তর পরিবর্তনকারী, আমার অন্তরকে আপনার দ্বীনের ওপর অবিচল রাখুন।","জামে তিরমিযি"],
+["হেদায়াত ও তাকওয়ার দোয়া","اللَّهُمَّ إِنِّي أَسْأَلُكَ الْهُدَىٰ وَالتُّقَىٰ وَالْعَفَافَ وَالْغِنَىٰ","হে আল্লাহ, আপনার কাছে হেদায়াত, তাকওয়া, পবিত্রতা ও অমুখাপেক্ষিতা চাই।","সহিহ মুসলিম"],
+["আল্লাহর সাহায্য চাওয়ার জিকির","لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ","আল্লাহর সাহায্য ছাড়া কোনো শক্তি ও সামর্থ্য নেই।","সহিহ বুখারি ও মুসলিম"]
+];
+(function(){const d=duas[(new Date().getDate()-1)%duas.length];$("duaTitle").textContent=d[0];$("duaAr").textContent=d[1];$("duaBn").textContent="অর্থ: "+d[2];$("duaRef").textContent="সূত্র: "+d[3]})();
+
+/* ---------- তাসবীহ ---------- */
+let total=Math.max(0,Math.floor(Number(store.get("tasbeehTotal",0))||0));
+let mode=store.get("tasbeehMode","fatimi");
+$("mode").value=mode;
+const pad=n=>bn(String(n).padStart(2,"0"));
+function renderTasbeeh(){
+  $("total").textContent=pad(total);
+  let zikr="সুবহানাল্লাহ",count=total,goal=100,rounds=Math.floor(total/100);
+  if(mode==="fatimi"){
+    const p=total%100,r=total&&p===0;
+    const pos=r?100:p;
+    if(pos===0){zikr="সুবহানাল্লাহ";count=0;goal=33}
+    else if(pos<=33){zikr="সুবহানাল্লাহ";count=pos;goal=33}
+    else if(pos<=66){zikr="আলহামদুলিল্লাহ";count=pos-33;goal=33}
+    else{zikr="আল্লাহু আকবার";count=pos-66;goal=34}
+  }else{
+    const g=Number(mode);goal=g;rounds=Math.floor(total/g);
+    count=total%g;if(total&&count===0)count=g;
+    zikr="জিকির";
+  }
+  $("rounds").textContent=pad(rounds);
+  $("zikr").textContent=zikr;
+  $("sub").textContent=pad(count);
+  $("zprog").textContent=`${bn(count)} / ${bn(goal)}`;
+}
+function roundDone(){
+  if(mode==="fatimi")return total>0&&total%100===0;
+  return total>0&&total%Number(mode)===0;
+}
+$("tap").onclick=()=>{
+  total++;store.set("tasbeehTotal",total);renderTasbeeh();
+  const done=roundDone();
+  if(navigator.vibrate)navigator.vibrate(done?[80,40,80]:20);
+  $("tStatus").textContent=done?"মাশাআল্লাহ! একটি রাউন্ড সম্পূর্ণ হয়েছে।":"";
+};
+let resetArmed=false,resetTimer;
+$("reset").onclick=()=>{
+  const b=$("reset");
+  if(!resetArmed){resetArmed=true;b.innerHTML='<i class="fas fa-rotate-left"></i> নিশ্চিত? আবার চাপুন';clearTimeout(resetTimer);
+    resetTimer=setTimeout(()=>{resetArmed=false;b.innerHTML='<i class="fas fa-rotate-left"></i> রিস্টার্ট'},3000);return}
+  resetArmed=false;clearTimeout(resetTimer);b.innerHTML='<i class="fas fa-rotate-left"></i> রিস্টার্ট';
+  total=0;store.set("tasbeehTotal",0);renderTasbeeh();$("tStatus").textContent="গণনা রিসেট হয়েছে, মোট ০০।";
+};
+$("mode").onchange=e=>{mode=e.target.value;store.set("tasbeehMode",mode);total=0;store.set("tasbeehTotal",0);renderTasbeeh();$("tStatus").textContent="ধরন বদলানোয় গণনা শূন্য করা হয়েছে।"};
+
+/* ---------- শুরু ---------- */
+$("year").textContent=bn(new Date().getFullYear());
+loadSurah(cur);renderTasbeeh();loadPrayer();
+</script>
+</body>
+</html>
