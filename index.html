@@ -171,6 +171,14 @@ nav{position:fixed;top:auto;bottom:0;left:0;right:0;padding:6px;gap:4px;border-t
     <p class="ref" style="margin-top:10px">নির্বাচিত শহরের সময়, কারাচি বিশ্ববিদ্যালয় পদ্ধতি, আসর হানাফি মতে। স্থানভেদে সামান্য পার্থক্য হতে পারে।</p>
   </div>
 
+  <div class="card center">
+    <b class="gold"><i class="fas fa-bell"></i> আজানের অ্যালার্ম</b>
+    <label style="display:flex;justify-content:center;align-items:center;gap:10px;margin-top:10px"><input type="checkbox" id="adhanOn" style="width:20px;height:20px"> ওয়াক্ত হলে নোটিফিকেশন</label>
+    <label style="display:flex;justify-content:center;align-items:center;gap:10px;margin-top:6px"><input type="checkbox" id="adhanSound" checked style="width:20px;height:20px"> আজানের শব্দ</label>
+    <p class="status" id="adhanSt" role="status"></p>
+    <button class="reset" id="adhanStop" hidden><i class="fas fa-bell-slash"></i> আজান বন্ধ করুন</button>
+  </div>
+
   <div class="bgcard sehri">
     <b class="ttl"><i class="fas fa-moon"></i> সাহরি ও ইফতার</b>
     <div class="grid2"><div class="pt"><small>সাহরি শেষ</small><b id="sehriT">--</b></div><div class="pt"><small>ইফতার</small><b id="iftarT">--</b></div></div>
@@ -213,7 +221,8 @@ nav{position:fixed;top:auto;bottom:0;left:0;right:0;padding:6px;gap:4px;border-t
     <div class="bar">
       <button class="sbtn" id="fsMinus" aria-label="ফন্ট ছোট">A−</button>
       <button class="sbtn" id="fsPlus" aria-label="ফন্ট বড়">A+</button>
-      <span class="ref">শেষ পড়া সূরা স্বয়ংক্রিয়ভাবে সংরক্ষিত হয়</span>
+      <span class="ref" id="lastRead"></span>
+      <button class="sbtn" id="goLast"><i class="fas fa-bookmark"></i> শেষ পড়া স্থানে যান</button>
     </div>
     <div id="sheet" aria-live="polite">
       <div class="sheet-title" id="bookTitle"></div>
@@ -302,9 +311,7 @@ nav{position:fixed;top:auto;bottom:0;left:0;right:0;padding:6px;gap:4px;border-t
 <footer>
   <p>ইসলামিক আলো ও নামাজ শিক্ষা © <span id="year"></span> | পরিচালনা ও ডিজাইনে: <strong>Md Rashed</strong></p>
   <p style="margin-top:6px">কুরআন ও অনুবাদ: <a style="color:var(--em)" href="https://alquran.cloud" target="_blank" rel="noopener">AlQuran.Cloud</a> (বাংলা: bn.bengali) · অডিও: মিশারি আল-আফাসি, <a style="color:var(--em)" href="https://mp3quran.net" target="_blank" rel="noopener">mp3quran.net</a> · নামাজের সময়: <a style="color:var(--em)" href="https://aladhan.com" target="_blank" rel="noopener">AlAdhan</a></p>
-</footer>
-
-<script>
+</footer> <script>
 const $=id=>document.getElementById(id);
 const bn=n=>String(n).replace(/\d/g,d=>"০১২৩৪৫৬৭৮৯"[d]);
 const store={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:v}catch(e){return d}},set(k,v){try{localStorage.setItem(k,String(v))}catch(e){}}};
@@ -317,6 +324,7 @@ function switchTab(t){
   document.querySelectorAll(".tab").forEach(s=>s.classList.toggle("active",s.id===t));
   document.querySelectorAll(".nav-btn").forEach(b=>b.classList.toggle("active",b.dataset.tab===t));
   window.scrollTo({top:0,behavior:"smooth"});
+  if(t==="quran")setTimeout(goAyah,80);
 }
 document.querySelectorAll(".nav-btn").forEach(b=>b.onclick=()=>switchTab(b.dataset.tab));
 document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>switchTab(b.dataset.go));
@@ -345,8 +353,8 @@ function stripBismillah(text){
   return w.slice(4).join(" ");
 }
 
-async function loadSurah(n){
-  n=Math.min(114,Math.max(1,Number(n)||1));cur=n;store.set("lastSurah",n);
+async function loadSurah(n,ay){
+  n=Math.min(114,Math.max(1,Number(n)||1));cur=n;store.set("lastSurah",n);store.set("lastAyah",ay||1);showLast();
   $("bookTitle").textContent=label(n-1);
   $("pageInd").textContent=`সূরা ${bn(n)} / ১১৪`;
   $("prevBtn").disabled=n===1;$("nextBtn").disabled=n===114;
@@ -362,15 +370,16 @@ async function loadSurah(n){
     if(n!==cur)return;
     const box=$("ayahs");box.textContent="";
     $("bism").hidden=(n===1||n===9);
-    aj.data.ayahs.forEach((ay,i)=>{
-      let t=ay.text;
+    aj.data.ayahs.forEach((ay2,i)=>{
+      let t=ay2.text;
       if(i===0&&n!==1&&n!==9&&t.startsWith("بِسْمِ"))t=stripBismillah(t);
-      const d=document.createElement("div");d.className="ayah";
+      const d=document.createElement("div");d.className="ayah";d.dataset.n=i+1;
       const num=document.createElement("span");num.className="num";num.textContent=`আয়াত ${bn(i+1)}`;
       const ar=document.createElement("div");ar.className="ar";ar.textContent=t;
       const bg=document.createElement("div");bg.className="bn";bg.textContent=bj.data.ayahs[i].text;
       d.append(num,ar,bg);box.appendChild(d);
     });
+    trackAyah(n,ay||1);
     $("qStatus").textContent=`${bn(aj.data.ayahs.length)}টি আয়াত লোড হয়েছে।`;
   }catch(e){
     $("ayahs").textContent="ইন্টারনেট বা সার্ভার সমস্যার কারণে লোড করা যায়নি। আবার চেষ্টা করুন।";
@@ -424,6 +433,7 @@ function untilSec(minute,now){let t=minute*60-now;if(t<=0)t+=86400;return t}
 function tick(){
   if(!mins)return;
   const now=dhakaNowSec();
+  checkAdhan(now);
   let idx=mins.findIndex(m=>m*60>now),target;
   if(idx===-1){idx=0;target=mins[0]*60+86400}else target=mins[idx]*60;
   const curP=(idx-1+5)%5, left=target-now;
@@ -561,9 +571,92 @@ function renderDaily(){
     row.innerHTML=`<span>${wdShort[d.getDay()]}</span><div class="dbar"><i style="width:${v/max*100}%"></i></div><b>${bn(v)}</b>`;box.appendChild(row)});
 }
 
+/* ---------- শেষ পড়া (আয়াতসহ) ---------- */
+let obs=null,tracking=false,pendingAy=0;
+function showLast(){
+  const s=Number(store.get("lastSurah",1))||1,a=Number(store.get("lastAyah",1))||1;
+  $("lastRead").textContent=`শেষ পড়া: সূরা ${names[s-1]}, আয়াত ${bn(a)}`;
+}
+function goAyah(){
+  if(!pendingAy||!$("quran").classList.contains("active"))return;
+  const el=document.querySelector(`#ayahs .ayah[data-n="${pendingAy}"]`);
+  if(!el)return;
+  el.scrollIntoView({block:"center"});
+  el.style.outline="2px solid var(--gold)";
+  pendingAy=0;setTimeout(()=>tracking=true,700);
+}
+function trackAyah(n,target){
+  if(obs)obs.disconnect();
+  tracking=target<=1;pendingAy=target>1?target:0;
+  goAyah();
+  obs=new IntersectionObserver(es=>{
+    if(!tracking)return;
+    const vis=es.filter(e=>e.isIntersecting);
+    if(!vis.length)return;
+    const a=Number(vis[vis.length-1].target.dataset.n);
+    store.set("lastSurah",n);store.set("lastAyah",a);showLast();
+  },{rootMargin:"-10% 0px -80% 0px"});
+  document.querySelectorAll("#ayahs .ayah").forEach(e=>obs.observe(e));
+}
+$("goLast").onclick=()=>loadSurah(Number(store.get("lastSurah",1))||1,Number(store.get("lastAyah",1))||1);
+
+/* ---------- আজান অ্যালার্ম ---------- */
+const ADHAN_URL="adhan.mp3"; // নিজের আজান ফাইল এই নামে একই ফোল্ডারে রাখুন
+let adhanOn=store.get("adhanOn","0")==="1",adhanSnd=store.get("adhanSnd","1")==="1";
+let adhanAudio=null,actx=null;
+function beep(){
+  try{
+    actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+    [0,.5,1].forEach(t=>{const o=actx.createOscillator(),g=actx.createGain(),s=actx.currentTime+t;
+      o.frequency.value=660;o.connect(g);g.connect(actx.destination);
+      g.gain.setValueAtTime(.25,s);g.gain.exponentialRampToValueAtTime(.001,s+.4);o.start(s);o.stop(s+.4)});
+  }catch(e){}
+}
+function fireAdhan(i){
+  const nm=prayers[i][1];
+  $("adhanSt").textContent=`${nm} এর ওয়াক্ত হয়েছে।`;
+  $("adhanStop").hidden=false;
+  if("Notification" in window&&Notification.permission==="granted"){
+    try{new Notification(`${nm} এর ওয়াক্ত হয়েছে`,{body:`${cities[cityIdx][0]} • ${fmt12(mins[i])}`,tag:"adhan"})}catch(e){}
+  }
+  if(adhanSnd){
+    let fb=false;const f=()=>{if(!fb){fb=true;beep()}};
+    adhanAudio=adhanAudio||new Audio(ADHAN_URL);
+    adhanAudio.onerror=f;adhanAudio.currentTime=0;
+    const p=adhanAudio.play();if(p&&p.catch)p.catch(f);
+  }
+  if(navigator.vibrate)navigator.vibrate([300,150,300]);
+}
+function checkAdhan(now){
+  if(!adhanOn||!mins)return;
+  mins.forEach((m,i)=>{
+    const d=now-m*60;
+    if(d>=0&&d<90){
+      const k=new Date().toLocaleDateString("en-CA")+"-"+i;
+      if(store.get("adhanLast","")!==k){store.set("adhanLast",k);fireAdhan(i)}
+    }
+  });
+}
+$("adhanOn").checked=adhanOn;$("adhanSound").checked=adhanSnd;
+$("adhanOn").onchange=async e=>{
+  adhanOn=e.target.checked;store.set("adhanOn",adhanOn?"1":"0");
+  const st=$("adhanSt");
+  if(!adhanOn){st.textContent="আজান অ্যালার্ম বন্ধ।";return}
+  try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();actx.resume()}catch(x){}
+  try{adhanAudio=new Audio(ADHAN_URL);adhanAudio.muted=true;await adhanAudio.play();adhanAudio.pause();adhanAudio.currentTime=0;adhanAudio.muted=false}catch(x){adhanAudio=null}
+  if("Notification" in window){
+    const p=Notification.permission==="granted"?"granted":await Notification.requestPermission();
+    st.textContent=p==="granted"?"চালু হয়েছে। ওয়াক্ত হলে নোটিফিকেশন ও আজান আসবে (পেজ খোলা রাখতে হবে)।":"নোটিফিকেশনের অনুমতি দেওয়া হয়নি; শুধু শব্দ বাজবে।";
+  }else st.textContent="এই ব্রাউজারে নোটিফিকেশন নেই; শুধু শব্দ বাজবে।";
+};
+$("adhanSound").onchange=e=>{adhanSnd=e.target.checked;store.set("adhanSnd",adhanSnd?"1":"0")};
+$("adhanStop").onclick=()=>{if(adhanAudio)adhanAudio.pause();$("adhanStop").hidden=true};
+
 /* ---------- শুরু ---------- */
 $("year").textContent=bn(new Date().getFullYear());
-loadSurah(cur);renderTasbeeh();renderDaily();updateQibla();loadPrayer();
+loadSurah(cur,Number(store.get("lastAyah",1))||1);renderTasbeeh();renderDaily();updateQibla();loadPrayer();
 </script>
 </body>
 </html>
+
+<!-- ===== পার্ট ১ এখানে শেষ। এর নিচে পার্ট ২ (<script> থেকে </html> পর্যন্ত) বসবে ===== -->
