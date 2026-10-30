@@ -207,6 +207,7 @@ nav{position:fixed;top:auto;bottom:0;left:0;right:0;padding:6px;gap:4px;border-t
     <div class="arabic" id="duaAr"></div>
     <p id="duaBn"></p><p class="pill small" id="duaRef"></p><br>
     <button class="sbtn gbtn" id="shareDua" style="margin-top:10px"><i class="fas fa-share-nodes"></i> শেয়ার করুন</button>
+    <button class="sbtn gbtn" id="duaImg" style="margin-top:10px"><i class="fas fa-image"></i> ছবি বানান</button>
     <p class="status" id="shareSt" role="status"></p>
   </div>
 </section>
@@ -311,7 +312,22 @@ nav{position:fixed;top:auto;bottom:0;left:0;right:0;padding:6px;gap:4px;border-t
 <footer>
   <p>ইসলামিক আলো ও নামাজ শিক্ষা © <span id="year"></span> | পরিচালনা ও ডিজাইনে: <strong>Md Rashed</strong></p>
   <p style="margin-top:6px">কুরআন ও অনুবাদ: <a style="color:var(--em)" href="https://alquran.cloud" target="_blank" rel="noopener">AlQuran.Cloud</a> (বাংলা: bn.bengali) · অডিও: মিশারি আল-আফাসি, <a style="color:var(--em)" href="https://mp3quran.net" target="_blank" rel="noopener">mp3quran.net</a> · নামাজের সময়: <a style="color:var(--em)" href="https://aladhan.com" target="_blank" rel="noopener">AlAdhan</a></p>
-</footer> <script>
+</footer>
+
+<div id="cardModal" hidden style="position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.88);overflow:auto;padding:16px;text-align:center">
+  <div style="max-width:520px;margin:0 auto">
+    <canvas id="cardCv" style="width:100%;height:auto;border-radius:14px;border:1px solid var(--line)"></canvas>
+    <div class="bar" id="cardThemes" style="justify-content:center;margin-top:12px"></div>
+    <div class="bar" style="justify-content:center">
+      <button class="turn" id="cardShare"><i class="fas fa-share-nodes"></i> শেয়ার</button>
+      <button class="turn" id="cardDl"><i class="fas fa-download"></i> ডাউনলোড</button>
+      <button class="reset" id="cardClose">বন্ধ</button>
+    </div>
+    <p class="status" id="cardSt" role="status"></p>
+  </div>
+</div>
+
+<!-- ===== পার্ট ১ এখানে শেষ। এর নিচে পার্ট ২ (<script> থেকে </html> <script>
 const $=id=>document.getElementById(id);
 const bn=n=>String(n).replace(/\d/g,d=>"০১২৩৪৫৬৭৮৯"[d]);
 const store={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:v}catch(e){return d}},set(k,v){try{localStorage.setItem(k,String(v))}catch(e){}}};
@@ -377,7 +393,10 @@ async function loadSurah(n,ay){
       const num=document.createElement("span");num.className="num";num.textContent=`আয়াত ${bn(i+1)}`;
       const ar=document.createElement("div");ar.className="ar";ar.textContent=t;
       const bg=document.createElement("div");bg.className="bn";bg.textContent=bj.data.ayahs[i].text;
-      d.append(num,ar,bg);box.appendChild(d);
+      const sb=document.createElement("button");sb.className="sbtn";sb.style.cssText="margin-top:8px;font-size:12px;padding:4px 12px";
+      sb.innerHTML='<i class="fas fa-image"></i> ছবি বানান';
+      sb.onclick=()=>openCard({ar:t,bn:bj.data.ayahs[i].text,ref:`সূরা ${names[n-1]} ${bn(n)}:${bn(i+1)}`});
+      d.append(num,ar,bg,sb);box.appendChild(d);
     });
     trackAyah(n,ay||1);
     $("qStatus").textContent=`${bn(aj.data.ayahs.length)}টি আয়াত লোড হয়েছে।`;
@@ -652,11 +671,91 @@ $("adhanOn").onchange=async e=>{
 $("adhanSound").onchange=e=>{adhanSnd=e.target.checked;store.set("adhanSnd",adhanSnd?"1":"0")};
 $("adhanStop").onclick=()=>{if(adhanAudio)adhanAudio.pause();$("adhanStop").hidden=true};
 
+/* ---------- আয়াত/দোয়া ছবি কার্ড ---------- */
+const THEMES=[
+  {n:"সবুজ",a:"#0b3d27",b:"#031a10",t:"#fff8dc",g:"#f7c948"},
+  {n:"নীল",a:"#12356b",b:"#06142e",t:"#ffffff",g:"#ffd479"},
+  {n:"কালো",a:"#1d1d1d",b:"#000000",t:"#ffffff",g:"#f7c948"},
+  {n:"ছবি",img:"dua-bg.jpg",t:"#fff8dc",g:"#f7c948"}
+];
+let cardData=null,cardTheme=0;
+function wrapLines(ctx,text,maxW){
+  const w=text.split(/\s+/),lines=[];let l="";
+  w.forEach(x=>{const t=l?l+" "+x:x;if(ctx.measureText(t).width>maxW&&l){lines.push(l);l=x}else l=t});
+  if(l)lines.push(l);return lines;
+}
+async function drawCard(){
+  const W=1080,pad=90,mw=W-pad*2,th=THEMES[cardTheme],d=cardData;
+  const cv=$("cardCv"),ctx=cv.getContext("2d");
+  try{await Promise.all([document.fonts.load("40px Amiri"),document.fonts.load('700 30px "Noto Sans Bengali"')])}catch(e){}
+  let img=null;
+  if(th.img)img=await new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=th.img});
+  const m=document.createElement("canvas").getContext("2d");
+  let as=60,bs,al,bl,H;
+  for(;as>=30;as-=4){
+    m.direction="rtl";m.font=`${as}px Amiri`;al=wrapLines(m,d.ar,mw);
+    bs=Math.round(as*.55);m.direction="ltr";m.font=`${bs}px "Noto Sans Bengali"`;bl=wrapLines(m,d.bn,mw);
+    H=pad+80+al.length*as*1.9+50+bl.length*bs*1.6+120+pad;
+    if(H<=1350)break;
+  }
+  H=Math.round(Math.max(1080,H));
+  cv.width=W;cv.height=H;
+  if(img){
+    const s=Math.max(W/img.width,H/img.height);
+    ctx.drawImage(img,(W-img.width*s)/2,(H-img.height*s)/2,img.width*s,img.height*s);
+    ctx.fillStyle="rgba(2,20,12,.65)";ctx.fillRect(0,0,W,H);
+  }else{
+    const g=ctx.createLinearGradient(0,0,W,H);g.addColorStop(0,th.a);g.addColorStop(1,th.b);
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  }
+  ctx.strokeStyle=th.g;ctx.lineWidth=4;ctx.strokeRect(30,30,W-60,H-60);
+  ctx.lineWidth=1.5;ctx.strokeRect(44,44,W-88,H-88);
+  ctx.textAlign="center";ctx.textBaseline="middle";
+  const contentH=al.length*as*1.9+50+bl.length*bs*1.6;
+  let y=Math.max(pad,(H-110-contentH)/2);
+  ctx.direction="rtl";ctx.font=`${as}px Amiri`;ctx.fillStyle=th.t;
+  al.forEach(l=>{ctx.fillText(l,W/2,y+as*.95);y+=as*1.9});
+  y+=50;
+  ctx.direction="ltr";ctx.font=`${bs}px "Noto Sans Bengali"`;ctx.fillStyle="#e9f3ec";
+  bl.forEach(l=>{ctx.fillText(l,W/2,y+bs*.8);y+=bs*1.6});
+  ctx.fillStyle=th.g;ctx.font='700 30px "Noto Sans Bengali"';ctx.fillText(d.ref,W/2,H-100);
+  ctx.fillStyle="rgba(255,255,255,.75)";ctx.font='600 24px "Noto Sans Bengali"';
+  ctx.fillText("ইসলামিক আলো ও নামাজ শিক্ষা",W/2,H-64);
+}
+function openCard(d){
+  cardData=d;$("cardSt").textContent="";
+  const box=$("cardThemes");
+  if(!box.children.length)THEMES.forEach((t,i)=>{
+    const b=document.createElement("button");b.className="sbtn";b.textContent=t.n;
+    b.onclick=()=>{cardTheme=i;drawCard()};box.appendChild(b);
+  });
+  $("cardModal").hidden=false;document.body.style.overflow="hidden";drawCard();
+}
+function closeCard(){$("cardModal").hidden=true;document.body.style.overflow=""}
+const cardBlob=()=>new Promise(r=>$("cardCv").toBlob(r,"image/png"));
+$("cardClose").onclick=closeCard;
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeCard()});
+$("cardShare").onclick=async()=>{
+  try{
+    const b=await cardBlob();if(!b)throw 0;
+    const f=new File([b],"islamic-alo.png",{type:"image/png"});
+    if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:cardData.ref});return}
+    $("cardSt").textContent="এই ডিভাইসে সরাসরি শেয়ার নেই; ডাউনলোড বাটন ব্যবহার করুন।";
+  }catch(e){if(!e||e.name!=="AbortError")$("cardSt").textContent="শেয়ার করা যায়নি; ডাউনলোড করে শেয়ার করুন।"}
+};
+$("cardDl").onclick=async()=>{
+  try{
+    const b=await cardBlob();if(!b)throw 0;
+    const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="islamic-alo.png";
+    document.body.appendChild(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+  }catch(e){$("cardSt").textContent="ছবি সেভ করা যায়নি। অন্য থিম (সবুজ/নীল/কালো) চেষ্টা করুন।"}
+};
+$("duaImg").onclick=()=>{const d=curDuaObj;openCard({ar:d[1],bn:d[2],ref:d[3]})};
+
 /* ---------- শুরু ---------- */
 $("year").textContent=bn(new Date().getFullYear());
 loadSurah(cur,Number(store.get("lastAyah",1))||1);renderTasbeeh();renderDaily();updateQibla();loadPrayer();
 </script>
 </body>
 </html>
-
-<!-- ===== পার্ট ১ এখানে শেষ। এর নিচে পার্ট ২ (<script> থেকে </html> পর্যন্ত) বসবে ===== -->
